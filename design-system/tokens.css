@@ -1,0 +1,53 @@
+:root {
+  /* Brand & Accent */
+  --color-primary: #ff385c;
+  --color-primary-active: #e00b41;
+  --color-primary-disabled: #ffd1da;
+  --color-luxe: #460479;
+  --color-plus: #92174d;
+  
+  /* Text */
+  --color-ink: #222222;
+  --color-body: #3f3f3f;
+  --color-muted: #6a6a6a;
+  --color-muted-soft: #929292;
+  
+  /* Surface & Borders */
+  --color-canvas: #ffffff;
+  --color-surface-soft: #f7f7f7;
+  --color-surface-strong: #f2f2f2;
+  --color-hairline: #dddddd;
+  --color-hairline-soft: #ebebeb;
+  --color-border-strong: #c1c1c1;
+  
+  /* Semantic */
+  --color-error: #c13515;
+  --color-legal: #428bff;
+  
+  /* Shadows */
+  --shadow-card: rgba(0,0,0,0.02) 0px 0px 0px 1px, rgba(0,0,0,0.04) 0px 2px 6px, rgba(0,0,0,0.1) 0px 4px 8px;
+  --shadow-hover: rgba(0,0,0,0.08) 0px 4px 12px;
+
+  /* Rounded */
+  --rounded-none: 0px;
+  --rounded-xs: 4px;
+  --rounded-sm: 8px;
+  --rounded-md: 14px;
+  --rounded-lg: 20px;
+  --rounded-xl: 32px;
+  --rounded-full: 9999px;
+
+  /* Spacing */
+  --spacing-xxs: 2px;
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 12px;
+  --spacing-base: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-xxl: 48px;
+  --spacing-section: 64px;
+
+  /* Typography Scale */
+  --font-family: 'Airbnb Cereal VF', Circular, -apple-system, system-ui, Roboto, 'Helvetica Neue', sans-serif;
+}

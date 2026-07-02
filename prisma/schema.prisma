@@ -1,0 +1,425 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum UserRole {
+  GUEST
+  HOST
+  ADMIN
+}
+
+enum HostStatus {
+  NONE
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum RentalType {
+  WITH_CAPTAIN
+  BAREBOAT
+  BOTH
+}
+
+enum TripBookingType {
+  PRIVATE
+  SHARING
+}
+
+enum TripStatus {
+  SEARCHING
+  CONFIRMED
+  FULL
+  CANCELLED
+  COMPLETED
+}
+
+enum PaymentStatus {
+  PENDING
+  HELD
+  RELEASED
+  REFUNDED
+}
+
+model User {
+  id            String  @id
+  name          String
+  email         String
+  emailVerified Boolean @default(false)
+  image         String?
+
+  // Custom GoFishi fields
+  phoneNumber String?
+  idCardImage String?
+  role        UserRole   @default(GUEST)
+  hostStatus  HostStatus @default(NONE)
+
+  // Captain Onboarding & Verification
+  isVerified     Boolean @default(false)
+  captainLicense String? // URL to document
+  boatSafetyCert String? // URL to document
+  commissionRate Float   @default(10.0) // Platform fee percentage
+
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
+  twoFactorEnabled Boolean?    @default(false)
+  sessions         Session[]
+  accounts         Account[]
+  twofactors       TwoFactor[]
+
+  listings       Listing[]
+  tripBookings   TripBooking[]
+  catchGalleries CatchGallery[]
+
+  // Two-way reviews
+  userReviews     UserReview[] @relation("UserAsReviewer")
+  receivedReviews UserReview[] @relation("UserAsSubject")
+
+  favoriteIds String[] @default([])
+
+  @@unique([email])
+  @@map("user")
+}
+
+model Listing {
+  id          String   @id @default(cuid())
+  title       String // Nama KM (Kapal Motor)
+  description String
+  imageSrc    String // Main Image
+  images      String[] @default([]) // Gallery
+  legalDocs   String[] @default([]) // Grosse Akta / Pas Kecil
+
+  // Booking Settings (Alur Sewa)
+  bookingApprovalType String @default("REAL_TIME") // REAL_TIME, HOST_APPROVAL
+  depositPercentage   Int    @default(0) // e.g., 50 for 50% deposit
+  cancellationDays    Int    @default(0) // H- cancellation limit
+
+  // Maritime & Boat Specifics
+  category     String // e.g., Fishing, Cruising, Diving
+  boatType     String // e.g., Center Console, Walkaround, Catamaran
+  fishingTechs String[] @default([]) // e.g., Inshore, Offshore
+
+  passengerCapacity Int
+  price             Int
+  engine1           String? // e.g., Mesin Dongfeng 300HP
+  engine2           String? // e.g., Mesin Yamaha 200HP
+  facilities        String[] @default([]) // e.g., Sarapan, Kopi, Teh, Makan Siang
+
+  hasLivewell     Boolean @default(false)
+  rodHoldersCount Int     @default(0)
+  hasFishFinder   Boolean @default(false)
+  hasGPS          Boolean @default(false)
+
+  blockedDates   BlockedDate[]
+  rentalPackages RentalPackage[]
+
+  navigationGear    String?
+  communicationGear String?
+
+  providesRods   Boolean  @default(false)
+  providesBait   Boolean  @default(false)
+  providesTackle Boolean  @default(false)
+  tackleTypes    String[] @default([]) // e.g., Spinning, Trolling, Jigging
+
+  hasCoolBox   Boolean @default(false)
+  hasBiminiTop Boolean @default(false)
+  hasRestroom  Boolean @default(false)
+  hasCabin     Boolean @default(false)
+
+  captainName String?
+  rentalType  RentalType @default(BOTH)
+
+  // Map Coordinates & Location
+  locationValue String // Country/Region Value/Dermaga
+  latitude      Float?
+  longitude     Float?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  status    String   @default("APPROVED") // PENDING, APPROVED, REJECTED
+  videoUrl  String?
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  tripMasters    TripMaster[]
+  addOns         AddOn[]
+  catchGalleries CatchGallery[]
+  reviews        UserReview[]
+
+  amenities Amenity[]
+
+  categoryId  String?
+  categoryRef Category? @relation(fields: [categoryId], references: [id])
+
+  locationId  String?
+  locationRef Location? @relation(fields: [locationId], references: [id])
+
+  @@index([userId])
+  @@index([locationValue])
+  @@index([category])
+  @@map("listing")
+}
+
+model TripMaster {
+  id        String  @id @default(cuid())
+  listingId String
+  listing   Listing @relation(fields: [listingId], references: [id], onDelete: Cascade)
+
+  dateStart DateTime
+  dateEnd   DateTime
+
+  bookingType TripBookingType
+
+  priceTotal   Int // Harga sewa 1 kapal (Private)
+  pricePerSeat Int? // Harga per kursi (Sharing)
+
+  minSeats     Int @default(1)
+  maxSeats     Int
+  currentSeats Int // Available seats (dikurangi saat ada booking)
+
+  status TripStatus @default(SEARCHING)
+
+  tripBookings TripBooking[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([listingId])
+  @@map("trip_master")
+}
+
+model TripBooking {
+  id           String     @id @default(cuid())
+  tripMasterId String
+  tripMaster   TripMaster @relation(fields: [tripMasterId], references: [id], onDelete: Cascade)
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  seatsBooked Int
+  totalAmount Int
+
+  paymentStatus PaymentStatus @default(PENDING)
+  paymentLink   String? // Midtrans/Xendit URL
+
+  manifests AnglerManifest[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([tripMasterId])
+  @@index([userId])
+  @@map("trip_booking")
+}
+
+model AnglerManifest {
+  id            String      @id @default(cuid())
+  tripBookingId String
+  tripBooking   TripBooking @relation(fields: [tripBookingId], references: [id], onDelete: Cascade)
+
+  name             String
+  idNumber         String? // NIK KTP
+  phone            String?
+  emergencyContact String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([tripBookingId])
+  @@map("angler_manifest")
+}
+
+model RentalPackage {
+  id          String @id @default(cuid())
+  days        Int // 1 (1 hari), 2 (2 hari), 3 (3 hari)
+  price       Int
+  meetingTime String // e.g., 02:00
+  returnTime  String // e.g., 17:00
+  area        String // e.g., Seputar Pulau Matahari
+
+  listingId String
+  listing   Listing @relation(fields: [listingId], references: [id], onDelete: Cascade)
+
+  @@index([listingId])
+  @@map("rental_package")
+}
+
+model AddOn {
+  id          String  @id @default(cuid())
+  name        String // e.g., Snorkeling Gear, BBQ
+  description String?
+  price       Int
+
+  listingId String
+  listing   Listing @relation(fields: [listingId], references: [id], onDelete: Cascade)
+
+  @@index([listingId])
+  @@map("add_on")
+}
+
+model CatchGallery {
+  id          String  @id @default(cuid())
+  imageSrc    String
+  description String?
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  listingId String
+  listing   Listing @relation(fields: [listingId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([listingId])
+  @@map("catch_gallery")
+}
+
+model AccountCreationToken {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  token     String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@map("account_creation_token")
+}
+
+model UserReview {
+  id      String @id @default(cuid())
+  rating  Int
+  comment String
+
+  reviewerId String
+  reviewer   User   @relation("UserAsReviewer", fields: [reviewerId], references: [id], onDelete: Cascade)
+
+  subjectId String? // The user being reviewed (if Host reviews Guest)
+  subject   User?   @relation("UserAsSubject", fields: [subjectId], references: [id], onDelete: Cascade)
+
+  listingId String? // The listing being reviewed (if Guest reviews Boat)
+  listing   Listing? @relation(fields: [listingId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@index([reviewerId])
+  @@index([subjectId])
+  @@index([listingId])
+  @@map("user_review")
+}
+
+model Session {
+  id        String   @id
+  expiresAt DateTime
+  token     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([token])
+  @@index([userId])
+  @@map("session")
+}
+
+model Account {
+  id                    String    @id
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@index([userId])
+  @@map("account")
+}
+
+model Verification {
+  id         String   @id
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([identifier])
+  @@map("verification")
+}
+
+model TwoFactor {
+  id          String   @id
+  secret      String
+  backupCodes String
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  verified    Boolean? @default(true)
+
+  @@index([secret])
+  @@index([userId])
+  @@map("twoFactor")
+}
+
+model Amenity {
+  id        String    @id @default(cuid())
+  name      String
+  icon      String?
+  listings  Listing[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@map("amenity")
+}
+
+model Category {
+  id        String    @id @default(cuid())
+  name      String
+  image     String?
+  listings  Listing[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@map("category")
+}
+
+model Location {
+  id        String    @id @default(cuid())
+  name      String
+  region    String
+  image     String?
+  listings  Listing[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@map("location")
+}
+
+model BlockedDate {
+  id     String   @id @default(cuid())
+  date   DateTime
+  reason String? // e.g., Maintenance, Private Use
+
+  listingId String
+  listing   Listing @relation(fields: [listingId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@index([listingId])
+  @@map("blocked_date")
+}
