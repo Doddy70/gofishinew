@@ -82,26 +82,53 @@ export default function ListingDetailClient({ listing }: ListingDetailClientProp
         </div>
       </div>
 
-      {/* Gallery Grid (Modal Style) */}
+      {/* Gallery Grid (Dynamic Layout based on image count) */}
       <div className="relative mb-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4 rounded-2xl overflow-hidden h-[300px] md:h-[460px]">
-          {galleryImages.slice(0, 5).map((img, idx) => (
-            <div 
-              key={idx} 
-              className={`relative w-full h-full overflow-hidden cursor-pointer ${idx % 3 === 0 ? 'md:col-span-2' : ''} group`}
-              onClick={() => setShowGallery(true)}
-            >
-              <Image
-                src={img}
-                alt={`${listing.title} Foto ${idx + 1}`}
-                fill
-                className="object-cover group-hover:opacity-90 group-hover:scale-105 transition-all duration-500"
-                sizes="(max-width: 768px) 100vw, 800px"
-                priority={idx === 0}
-              />
+        {galleryImages.length >= 5 ? (
+          <div className="grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-2 h-[300px] md:h-[460px] rounded-2xl overflow-hidden">
+            <div className="md:col-span-2 md:row-span-2 relative w-full h-full overflow-hidden cursor-pointer group" onClick={() => setShowGallery(true)}>
+              <Image src={galleryImages[0]} alt="Foto 1" fill className="object-cover group-hover:opacity-90 transition-opacity" priority />
             </div>
-          ))}
-        </div>
+            {galleryImages.slice(1, 5).map((img, idx) => (
+              <div key={idx} className="hidden md:block relative w-full h-full overflow-hidden cursor-pointer group" onClick={() => setShowGallery(true)}>
+                <Image src={img} alt={`Foto ${idx + 2}`} fill className="object-cover group-hover:opacity-90 transition-opacity" />
+              </div>
+            ))}
+          </div>
+        ) : galleryImages.length === 4 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 md:grid-rows-2 gap-2 h-[300px] md:h-[460px] rounded-2xl overflow-hidden">
+            {galleryImages.map((img, idx) => (
+              <div key={idx} className={`${idx > 0 ? 'hidden md:block' : ''} relative w-full h-full overflow-hidden cursor-pointer group`} onClick={() => setShowGallery(true)}>
+                <Image src={img} alt={`Foto ${idx + 1}`} fill className="object-cover group-hover:opacity-90 transition-opacity" priority={idx === 0} />
+              </div>
+            ))}
+          </div>
+        ) : galleryImages.length === 3 ? (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-2 h-[300px] md:h-[460px] rounded-2xl overflow-hidden">
+            <div className="md:col-span-2 relative w-full h-full overflow-hidden cursor-pointer group" onClick={() => setShowGallery(true)}>
+              <Image src={galleryImages[0]} alt="Foto 1" fill className="object-cover group-hover:opacity-90 transition-opacity" priority />
+            </div>
+            <div className="hidden md:grid grid-rows-2 gap-2 h-full">
+              {galleryImages.slice(1, 3).map((img, idx) => (
+                <div key={idx} className="relative w-full h-full overflow-hidden cursor-pointer group" onClick={() => setShowGallery(true)}>
+                  <Image src={img} alt={`Foto ${idx + 2}`} fill className="object-cover group-hover:opacity-90 transition-opacity" />
+                </div>
+              ))}
+            </div>
+          </div>
+        ) : galleryImages.length === 2 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2 h-[300px] md:h-[460px] rounded-2xl overflow-hidden">
+            {galleryImages.map((img, idx) => (
+              <div key={idx} className={`${idx > 0 ? 'hidden md:block' : ''} relative w-full h-full overflow-hidden cursor-pointer group`} onClick={() => setShowGallery(true)}>
+                <Image src={img} alt={`Foto ${idx + 1}`} fill className="object-cover group-hover:opacity-90 transition-opacity" priority={idx === 0} />
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="h-[300px] md:h-[460px] rounded-2xl overflow-hidden relative w-full cursor-pointer group" onClick={() => setShowGallery(true)}>
+            <Image src={galleryImages[0]} alt="Foto 1" fill className="object-cover group-hover:opacity-90 transition-opacity" priority />
+          </div>
+        )}
         
         {/* Show all photos button */}
         {galleryImages.length > 0 && (
@@ -261,7 +288,7 @@ export default function ListingDetailClient({ listing }: ListingDetailClientProp
               reservations={listing.reservations || []}
               weekendPrice={listing.weekendPrice}
               holidayPrice={listing.holidayPrice}
-              captainPhone={listing.user?.phoneNumber}
+              captainPhone={listing.user?.phoneNumber || listing.captainPhone}
             />
           </div>
         </div>

@@ -18,6 +18,7 @@ export async function getListing(listingId: string) {
               id: true,
               name: true,
               image: true,
+              phoneNumber: true,
             },
           },
           catchGalleries: {
@@ -63,6 +64,17 @@ export async function getListing(listingId: string) {
               createdAt: 'desc'
             },
             take: 5,
+          },
+          reservations: {
+            where: {
+              status: { in: ["PENDING", "CONFIRMED", "COMPLETED"] },
+              endDate: { gte: new Date() }
+            },
+            select: {
+              id: true,
+              startDate: true,
+              endDate: true,
+            },
           },
           amenities: true,
           categoryRef: true,
