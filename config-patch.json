@@ -1,0 +1,8 @@
+{
+  "auth_email": {
+    "sign_in_strategies": ["password"],
+    "verification_strategies": [],
+    "verify_at_sign_up": false,
+    "required_for_sign_up": false
+  }
+}

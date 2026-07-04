@@ -4,12 +4,14 @@ import { categories } from "@/constants/Categories";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { LuChevronLeft, LuChevronRight, LuSlidersHorizontal } from "react-icons/lu";
 import { useRef, useState, useEffect } from "react";
+import { useFilterModal } from "@/store/useFilterListingModal";
 
 export default function CategoryList() {
   const params = useSearchParams();
   const category = params.get("category");
   const pathname = usePathname();
   const router = useRouter();
+  const { open: openFilterModal } = useFilterModal();
   const scrollRef = useRef<HTMLDivElement>(null);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(true);
@@ -68,7 +70,10 @@ export default function CategoryList() {
           {hasSearch ? (
             /* Quick Filter Pills (Search Mode) */
             <div className="flex items-center gap-2">
-              <div className="flex items-center gap-2 px-4 py-3 border border-hairline rounded-xl cursor-pointer hover:bg-muted/10 hover:border-ink transition min-w-fit">
+              <div 
+                onClick={openFilterModal}
+                className="flex items-center gap-2 px-4 py-3 border border-hairline rounded-xl cursor-pointer hover:bg-muted/10 hover:border-ink transition min-w-fit"
+              >
                 <LuSlidersHorizontal size={16} className="text-ink" />
                 <span className="text-[14px] font-medium text-ink">Filter</span>
               </div>
@@ -115,7 +120,10 @@ export default function CategoryList() {
 
       {/* Filter Button for Default Mode */}
       {!hasSearch && (
-        <div className="hidden md:flex items-center gap-2 px-4 py-3 border border-hairline rounded-xl cursor-pointer hover:bg-muted/10 hover:border-ink transition mb-3">
+        <div 
+          onClick={openFilterModal}
+          className="hidden md:flex items-center gap-2 px-4 py-3 border border-hairline rounded-xl cursor-pointer hover:bg-muted/10 hover:border-ink transition mb-3"
+        >
           <LuSlidersHorizontal size={16} className="text-ink" />
           <span className="text-[14px] font-medium text-ink">Filter</span>
         </div>

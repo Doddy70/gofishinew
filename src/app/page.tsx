@@ -21,8 +21,8 @@ export default async function Home(props: { searchParams: SearchParams }) {
 
   return (
     <div className="flex flex-col min-h-screen bg-canvas">
-      <div className="pt-[80px]">
-        <div className="sticky top-[160px] z-40 bg-canvas md:hidden">
+      <div className="pt-[80px] md:pt-[100px] w-full">
+        <div className="sticky top-[80px] z-30 bg-canvas border-b border-hairline pb-2 px-4 sm:px-6 md:px-10 xl:px-20">
           <CategoryList />
         </div>
       </div>

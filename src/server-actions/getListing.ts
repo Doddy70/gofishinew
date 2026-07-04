@@ -1,11 +1,11 @@
 // @ts-nocheck
 import prisma from "@/lib/prisma";
+import type { Listing } from "@/types/listing";
 
 export async function getListing(listingId: string) {
-  try {
   let listing = null;
   let retries = 2;
-  
+
   while (retries > 0) {
     try {
       listing = await prisma.listing.findUnique({
@@ -82,8 +82,9 @@ export async function getListing(listingId: string) {
         },
       });
       break; // Success, exit retry loop
-    } catch (e: any) {
-      if (e.code === 'P2028' || e.message?.includes('expired transaction')) {
+    } catch (e: unknown) {
+      const error = e as { code?: string; message?: string };
+      if (error.code === 'P2028' || error.message?.includes('expired transaction')) {
         retries -= 1;
         if (retries === 0) throw e;
         console.log(`[Neon Cold Start] Retrying getListing... (${retries} attempts left)`);
@@ -93,15 +94,11 @@ export async function getListing(listingId: string) {
     }
   }
 
-    if (!listing) return null;
+  if (!listing) return null;
 
-    return {
-      ...listing,
-      createdAt: listing.createdAt.toISOString(),
-      updatedAt: listing.updatedAt.toISOString(),
-    };
-  } catch (error) {
-    console.error(error);
-    return null;
-  }
+  return {
+    ...listing,
+    createdAt: listing.createdAt.toISOString(),
+    updatedAt: listing.updatedAt.toISOString(),
+  } as Listing;
 }

@@ -47,11 +47,8 @@ export default function HomeClient({ searchParams, initialListings, currentUser 
 
   return (
     <div className="w-full">
-      {/* Category Filter Bar */}
-      <div className="sticky top-[80px] z-30 bg-canvas pb-2 border-b border-hairline px-6 lg:px-10">
-        <div className={viewMode === "map" ? "w-full" : "max-w-[95%] md:w-[90%] mx-auto"}>
-          <CategoryList />
-        </div>
+      <div className="sticky top-[80px] z-30 bg-canvas border-b border-hairline pb-2 px-4 sm:px-6 md:px-10 xl:px-20">
+        <CategoryList />
       </div>
 
       {/* Main Content */}
@@ -123,7 +120,7 @@ export default function HomeClient({ searchParams, initialListings, currentUser 
 
           {/* Map Container - Only visible when viewMode is 'map' */}
           {viewMode === 'map' && (
-            <div className="w-full md:w-[45%] xl:w-[40%] h-[calc(100vh-170px)] sticky top-[170px] z-10 hidden md:block">
+            <div className="w-full md:w-[45%] xl:w-[40%] h-[calc(100vh-160px)] sticky top-[160px] z-10 hidden md:block">
               <ListingsMap listings={initialListings} />
             </div>
           )}

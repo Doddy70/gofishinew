@@ -5,13 +5,11 @@ import React from "react";
 export default async function GroupLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  try {
-    const { userId } = await auth();
+  // Get auth state - will throw redirect if not authenticated
+  const { userId } = await auth().catch(() => ({ userId: null }));
 
-    if (!userId) {
-      redirect("/");
-    }
-  } catch {
+  // If no user, redirect to home page
+  if (!userId) {
     redirect("/");
   }
 

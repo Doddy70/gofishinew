@@ -9,6 +9,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { generateUniqueSlug } from "@/lib/slug";
 import crypto from "crypto";
+import type { Listing, CreateListingInput, ApiResponse, Pagination } from "@/types/listing";
 
 // Zod validation schema for listing creation
 const createListingSchema = z.object({
@@ -27,7 +28,10 @@ export async function POST(req: Request) {
     const currentUser = await getCurrentUser();
 
     if (!currentUser?.id) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return NextResponse.json<ApiResponse<null>>(
+        { error: "Unauthorized" },
+        { status: 401 }
+      );
     }
 
     const formData = await req.formData();
@@ -48,7 +52,7 @@ export async function POST(req: Request) {
 
     // Validate required fields
     if (!data.title || !data.description || !data.price || !data.locationValue || !data.category || !data.image) {
-      return NextResponse.json(
+      return NextResponse.json<ApiResponse<null>>(
         { error: "Semua field wajib diisi: title, description, category, price, locationValue, image" },
         { status: 400 },
       );
@@ -61,7 +65,10 @@ export async function POST(req: Request) {
         field: issue.path.join("."),
         message: issue.message,
       }));
-      return NextResponse.json({ error: "Validation failed", details: errors }, { status: 400 });
+      return NextResponse.json<ApiResponse<null>>(
+        { error: "Validation failed", details: errors },
+        { status: 400 }
+      );
     }
 
     const validated = validationResult.data;
@@ -108,10 +115,10 @@ export async function POST(req: Request) {
       });
     }
 
-    return NextResponse.json(listing, { status: 201 });
+    return NextResponse.json<Listing>(listing, { status: 201 });
   } catch (error) {
     console.error("[LISTINGS_POST]", error);
-    return NextResponse.json(
+    return NextResponse.json<ApiResponse<null>>(
       { error: "Internal server error" },
       { status: 500 },
     );
@@ -143,8 +150,8 @@ export async function GET(req: Request) {
           listings.find((l) => l.id === id)
         ).filter(Boolean);
 
-        return NextResponse.json({
-          data: orderedListings,
+        return NextResponse.json<ApiResponse<Listing[]>>({
+          data: orderedListings as Listing[],
           pagination: {
             page: 1,
             limit: ids.length,
@@ -155,8 +162,8 @@ export async function GET(req: Request) {
       }
     }
 
-    // Get total count for pagination
-    const whereClause: any = {};
+    // Build where clause
+    const whereClause: Record<string, unknown> = {};
 
     if (searchParams.get("category")) {
       whereClause.category = searchParams.get("category");
@@ -165,10 +172,10 @@ export async function GET(req: Request) {
       whereClause.locationValue = searchParams.get("locationValue");
     }
     if (searchParams.get("minPrice")) {
-      whereClause.price = { ...whereClause.price, gte: Number(searchParams.get("minPrice")) };
+      whereClause.price = { ...whereClause.price as object, gte: Number(searchParams.get("minPrice")) };
     }
     if (searchParams.get("maxPrice")) {
-      whereClause.price = { ...whereClause.price, lte: Number(searchParams.get("maxPrice")) };
+      whereClause.price = { ...whereClause.price as object, lte: Number(searchParams.get("maxPrice")) };
     }
     if (searchParams.get("guests")) {
       whereClause.passengerCapacity = { gte: Number(searchParams.get("guests")) };
@@ -191,17 +198,19 @@ export async function GET(req: Request) {
 
     const totalPages = Math.ceil(totalCount / limit);
 
+    const pagination: Pagination = {
+      page,
+      limit,
+      total: totalCount,
+      totalPages,
+      hasNextPage: page < totalPages,
+      hasPrevPage: page > 1,
+    };
+
     // Create response with cache headers for SEO
-    const response = NextResponse.json({
-      data: listings,
-      pagination: {
-        page,
-        limit,
-        total: totalCount,
-        totalPages,
-        hasNextPage: page < totalPages,
-        hasPrevPage: page > 1,
-      }
+    const response = NextResponse.json<ApiResponse<Listing[]>>({
+      data: listings as Listing[],
+      pagination,
     });
 
     // Cache for 1 minute (listings change frequently)
@@ -210,7 +219,7 @@ export async function GET(req: Request) {
     return response;
   } catch (error) {
     console.error("[LISTINGS_GET] ERROR:", error);
-    return NextResponse.json(
+    return NextResponse.json<ApiResponse<null>>(
       { error: "Failed to fetch listings" },
       { status: 500 },
     );
