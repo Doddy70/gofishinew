@@ -2,6 +2,7 @@ import { User } from "./user";
 
 export interface Listing {
   id: string;
+  slug: string;
   title: string;
   description: string;
   imageSrc: string;
@@ -14,10 +15,11 @@ export interface Listing {
   createdAt: string | Date;
   updatedAt: string | Date;
   userId: string;
-  user: {
+  user?: {
     id: string;
     name: string | null;
     image: string | null;
+    phoneNumber?: string | null;
   };
   fishingTechs: string[];
   catchGalleries?: any[];
@@ -35,4 +37,11 @@ export interface Listing {
   videoUrl?: string | null;
   navigationGear?: string;
   reservations?: any[];
+  // Optional fields that may not exist in schema yet
+  captainName?: string;
+  meetingPoint?: string;
+  targetFish?: string[];
+  tackleInventory?: string;
+  weekendPrice?: number;
+  holidayPrice?: number;
 }

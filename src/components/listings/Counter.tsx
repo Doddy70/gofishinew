@@ -2,7 +2,7 @@ import { LuMinus, LuPlus } from "react-icons/lu";
 
 interface CounterProps {
   title: string;
-  subtitle: string;
+  subtitle?: string;
   value: number;
   onChange: (value: number) => void;
   min?: number;

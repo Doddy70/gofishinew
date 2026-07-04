@@ -8,6 +8,8 @@ export type ListingFilterParams = {
   startDate?: string;
   endDate?: string;
   guests?: number;
+  skip?: number;
+  take?: number;
 };
 
 export class ListingRepository {
@@ -20,6 +22,8 @@ export class ListingRepository {
       startDate,
       endDate,
       guests,
+      skip,
+      take,
     } = params;
 
     return await prisma.listing.findMany({
@@ -43,10 +47,10 @@ export class ListingRepository {
               NOT: {
                 OR: [
                   {
-                    reservations: {
+                    tripMasters: {
                       some: {
-                        startDate: { lte: new Date(endDate) },
-                        endDate: { gte: new Date(startDate) }
+                        dateStart: { lte: new Date(endDate) },
+                        dateEnd: { gte: new Date(startDate) }
                       }
                     }
                   },
@@ -70,7 +74,9 @@ export class ListingRepository {
       },
       include: {
         user: true, // Including user to make it easier to debug host status if needed
-      }
+      },
+      skip,
+      take,
     });
   }
 

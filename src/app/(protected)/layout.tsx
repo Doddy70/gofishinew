@@ -1,17 +1,19 @@
-import { auth } from "@/lib/auth";
-import { headers } from "next/headers";
+import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import React from "react";
 
 export default async function GroupLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-    const session = await auth.api.getSession({
-        headers:await headers()
-    });
+  try {
+    const { userId } = await auth();
 
-    if(!session){
-        redirect("/");
+    if (!userId) {
+      redirect("/");
     }
+  } catch {
+    redirect("/");
+  }
+
   return <>{children}</>;
 }

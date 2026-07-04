@@ -14,15 +14,18 @@ export default function ListingViewMap({
 }: ListingViewMapProps) {
   const { getByValue } = useCountries();
   const location = getByValue(locationValue);
+  
+  // Default fallback ke koordinat Semarang / Indonesia tengah
+  const centerCoordinate = location?.latlng || [-6.9828, 110.3951]; 
+
   const MapComponent = dynamic(() => import("../general/map/MapComponent"), {
     ssr: false,
-    loading: () => <p className="text-center py-6">Loading map...</p>,
+    loading: () => <div className="h-full w-full flex items-center justify-center bg-surface-soft">Loading map...</div>,
   });
 
-  if (!location) return;
   return (
-    <div className="h-120 overflow-hidden border border-gray-500">
-      <MapComponent price={price} center={location?.latlng} />
+    <div className="h-full w-full">
+      <MapComponent price={price} center={centerCoordinate as [number, number]} />
     </div>
   );
 }

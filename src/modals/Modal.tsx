@@ -1,49 +1,51 @@
+"use client";
+
+import { useEffect } from "react";
 import { LuX } from "react-icons/lu";
 
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
-  title: string;
+  title?: string;
   children: React.ReactNode;
 }
 
-export default function Modal({
-  isOpen,
-  onClose,
-  title,
-  children,
-}: ModalProps) {
+export default function Modal({ isOpen, onClose, title, children }: ModalProps) {
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
+
+  if (!isOpen) return null;
+
   return (
-    <div
-      aria-hidden={!isOpen}
-      className={`fixed inset-0 z-50 flex items-center justify-center px-4 transition-opacity duration-500 
-        ${isOpen ? "opacity-100" : "opacity-0 pointer-events-none"}    
-    `}
-    >
+    <div className="fixed inset-0 z-[100] flex items-center justify-center">
+      {/* Backdrop */}
       <div
-      onClick={onClose}
-        className={`absolute inset-0 bg-black/30  transition-all duration-500
-            ${isOpen ? "opacity-100" : "opacity-0"}
-            `}
+        onClick={onClose}
+        className="absolute inset-0 bg-black/50 backdrop-blur-sm"
       />
 
-      {/* modal */}
-      <div className={`relative z-10 w-full max-w-lg rounded-2xl bg-white shadow-2xl transform transition-all duration-500 
-      ${isOpen ? "translate-y-0 opacity-100" :  "translate-y-full opacity-0"}        
-        `}>
-            {/* header */}
-            <div className="flex items-center justify-between px-6 py-4 border-b border-gray-300">
-                <h2 className="text-lg font-semibold text-gray-900">{title}</h2>
-
-                <button aria-label="Close Modal"onClick={onClose} className="p-2 rounded-full hover:bg-gray-100 transition cursor-pointer">
-                    <LuX size={18}/>
-                </button>
-            </div>
-
-            {/* content */}
-            <div className="px-6 py-5">
-                {children}
-            </div>
+      {/* Modal */}
+      <div className="relative z-10 w-full max-w-md mx-4 bg-white rounded-2xl shadow-2xl overflow-hidden">
+        {title && (
+          <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
+            <h2 className="text-lg font-bold text-gray-900">{title}</h2>
+            <button
+              onClick={onClose}
+              className="p-2 rounded-full hover:bg-gray-100 text-gray-500"
+            >
+              <LuX size={18} />
+            </button>
+          </div>
+        )}
+        <div className="p-6">{children}</div>
       </div>
     </div>
   );

@@ -8,14 +8,20 @@ export async function getRservations() {
     return [];
   }
 
-  const reservations = await prisma.reservation.findMany({
+  const reservations = await prisma.tripBooking.findMany({
     where: {
-      listing: {
-        userId: currentUser.id,
+      tripMaster: {
+        listing: {
+          userId: currentUser.id,
+        },
       },
     },
     include: {
-      listing: true,
+      tripMaster: {
+        include: {
+          listing: true,
+        },
+      },
       user: true,
     },
     orderBy: {
@@ -25,8 +31,8 @@ export async function getRservations() {
 
   return reservations.map((reservation) => ({
     ...reservation,
-    startDate: reservation.startDate.toISOString(),
-    endDate: reservation.endDate.toISOString(),
-    createdAt: reservation.createdAt.toISOString,
+    startDate: reservation.tripMaster.dateStart.toISOString(),
+    endDate: reservation.tripMaster.dateEnd.toISOString(),
+    createdAt: reservation.createdAt.toISOString(),
   }));
 }

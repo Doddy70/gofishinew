@@ -21,7 +21,7 @@ export default function Error({
       </div>
       <div className="space-y-2">
         <h2 className="text-3xl font-black text-gray-900">Aduh, Terjadi Kesalahan!</h2>
-        <p className="text-gray-500 max-w-md mx-auto">
+        <p className="text-gray-500 w-full max-w-[400px] mx-auto">
           Sistem mengalami kendala teknis saat memuat halaman ini. Jangan khawatir, armada Anda tetap aman.
         </p>
       </div>

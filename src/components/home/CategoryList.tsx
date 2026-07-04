@@ -40,25 +40,47 @@ export default function CategoryList() {
     router.push(`${pathname}?${currentParams.toString()}`);
   };
 
+  const hasSearch = params.get("locationValue") || params.get("startDate") || params.get("guests");
+
+  const quickFilters = [
+    "Mesin cuci", "Wifi", "Parkir gratis", "Pemesanan Instan", 
+    "AC", "Diizinkan membawa hewan peliharaan", "TV", "1+ kamar mandi", "Dapur", "Setrika"
+  ];
+
   return (
-    <div className="max-w-[2520px] mx-auto flex items-center gap-4 bg-white pt-5 px-4 md:px-10 xl:px-20 relative">
+    <div className="w-full flex items-center gap-4 bg-canvas pt-2 px-0 relative">
       <div className="relative flex-1 overflow-hidden">
         {/* Left Arrow */}
         {showLeftArrow && (
-          <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-white via-white to-transparent z-10 flex items-center justify-start">
-            <div className="bg-white p-1.5 rounded-full shadow-[0_0_0_1px_rgba(0,0,0,0.1),0_2px_4px_rgba(0,0,0,0.1)] cursor-pointer hover:shadow-[0_0_0_1px_rgba(0,0,0,0.1),0_4px_8px_rgba(0,0,0,0.1)] transition-shadow" onClick={() => scrollRef.current?.scrollBy({ left: -400, behavior: 'smooth' })}>
-              <LuChevronLeft size={16} />
+          <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-canvas via-canvas to-transparent z-10 flex items-center justify-start">
+            <div className="bg-canvas p-1.5 rounded-full shadow-soft border border-hairline cursor-pointer hover:shadow-md transition-shadow" onClick={() => scrollRef.current?.scrollBy({ left: -400, behavior: 'smooth' })}>
+              <LuChevronLeft size={16} className="text-ink" />
             </div>
           </div>
         )}
 
-        {/* Categories Scroll Container */}
+        {/* Scroll Container */}
         <div 
           ref={scrollRef}
           onScroll={handleScroll}
-          className="flex items-center gap-8 overflow-x-auto no-scrollbar scroll-smooth"
+          className="flex items-center gap-6 overflow-x-auto no-scrollbar scroll-smooth pb-3"
         >
-          {categories.map((item) => {
+          {hasSearch ? (
+            /* Quick Filter Pills (Search Mode) */
+            <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 px-4 py-3 border border-hairline rounded-xl cursor-pointer hover:bg-muted/10 hover:border-ink transition min-w-fit">
+                <LuSlidersHorizontal size={16} className="text-ink" />
+                <span className="text-[14px] font-medium text-ink">Filter</span>
+              </div>
+              {quickFilters.map((filter) => (
+                <div key={filter} className="px-4 py-2 border border-hairline rounded-full cursor-pointer hover:border-ink transition min-w-fit">
+                  <span className="text-[14px] font-medium text-ink">{filter}</span>
+                </div>
+              ))}
+            </div>
+          ) : (
+            /* Icon Category Tabs (Default Mode) */
+            categories.map((item) => {
               const Icon = item.icon;
               const isActive = category === item.slug;
               
@@ -67,34 +89,37 @@ export default function CategoryList() {
                   key={item.slug}
                   onClick={() => handleClick(item.slug)}
                   className={`
-                    flex flex-col items-center justify-center gap-2 cursor-pointer transition-all border-b-2 pb-3 min-w-fit
-                    ${isActive ? 'border-[#222222] text-[#222222]' : 'border-transparent text-[#717171] hover:text-[#222222] hover:border-[#DDDDDD]'}
+                    flex flex-col items-center justify-center gap-1.5 cursor-pointer transition-all border-b-2 min-w-fit
+                    ${isActive ? 'border-ink text-ink' : 'border-transparent text-muted hover:text-ink hover:border-hairline'}
                   `}
                 >
-                  <Icon size={24} className={isActive ? 'text-[#222222]' : 'text-[#717171]'} />
-                  <span className={`text-[14px] font-medium whitespace-nowrap ${isActive ? 'text-[#222222]' : 'text-[#717171]'}`}>
+                  <Icon size={24} className={isActive ? 'text-ink' : 'text-muted'} />
+                  <span className={`text-[12px] font-medium whitespace-nowrap ${isActive ? 'text-ink' : 'text-muted'}`}>
                     {item.label}
                   </span>
                 </div>
               );
-          })}
+            })
+          )}
         </div>
 
         {/* Right Arrow */}
         {showRightArrow && (
-          <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-white via-white to-transparent z-10 flex items-center justify-end">
-            <div className="bg-white p-1.5 rounded-full shadow-[0_0_0_1px_rgba(0,0,0,0.1),0_2px_4px_rgba(0,0,0,0.1)] cursor-pointer hover:shadow-[0_0_0_1px_rgba(0,0,0,0.1),0_4px_8px_rgba(0,0,0,0.1)] transition-shadow" onClick={() => scrollRef.current?.scrollBy({ left: 400, behavior: 'smooth' })}>
-              <LuChevronRight size={16} />
+          <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-canvas via-canvas to-transparent z-10 flex items-center justify-end">
+            <div className="bg-canvas p-1.5 rounded-full shadow-soft border border-hairline cursor-pointer hover:shadow-md transition-shadow" onClick={() => scrollRef.current?.scrollBy({ left: 400, behavior: 'smooth' })}>
+              <LuChevronRight size={16} className="text-ink" />
             </div>
           </div>
         )}
       </div>
 
-      {/* Filter Button (Airbnb Style) */}
-      <div className="hidden md:flex items-center gap-2 px-4 py-3 border border-[#DDDDDD] rounded-xl cursor-pointer hover:bg-gray-50 hover:border-[#222222] transition mb-3">
-        <LuSlidersHorizontal size={16} className="text-[#222222]" />
-        <span className="text-sm font-semibold text-[#222222]">Filter</span>
-      </div>
+      {/* Filter Button for Default Mode */}
+      {!hasSearch && (
+        <div className="hidden md:flex items-center gap-2 px-4 py-3 border border-hairline rounded-xl cursor-pointer hover:bg-muted/10 hover:border-ink transition mb-3">
+          <LuSlidersHorizontal size={16} className="text-ink" />
+          <span className="text-[14px] font-medium text-ink">Filter</span>
+        </div>
+      )}
     </div>
   );
 }

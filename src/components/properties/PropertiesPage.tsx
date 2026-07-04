@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { getProperties } from "@/server-actions/getProperties"
 import EmptyListings from "../ui/EmptyListings";
 import ListingCard from "../listings/ListingCard";

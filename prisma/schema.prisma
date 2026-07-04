@@ -91,6 +91,7 @@ model User {
 model Listing {
   id          String   @id @default(cuid())
   title       String // Nama KM (Kapal Motor)
+  slug        String? @unique @default(cuid()) // URL-friendly identifier (e.g., "km-pesona-laut-ancol")
   description String
   imageSrc    String // Main Image
   images      String[] @default([]) // Gallery
@@ -165,6 +166,7 @@ model Listing {
   @@index([userId])
   @@index([locationValue])
   @@index([category])
+  @@index([slug])
   @@map("listing")
 }
 

@@ -1,17 +1,17 @@
+import {ClerkProvider} from "@clerk/nextjs";
 import type { Metadata } from "next";
-import {  Poppins } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import "../../design-system/tokens.css";
-import RegisterModal from "@/modals/RegisterModal";
-import LoginModal from "@/modals/LoginModal";
+
 import { Toaster } from "react-hot-toast";
 import CreateListingModal from "@/modals/CreateListingModal";
 import EditListingModal from "@/modals/EditListingModal";
 import FilterModal from "@/modals/FilterModal";
 import LayoutWrapper from "./LayoutWrapper";
 
-const poppins = Poppins({
-  variable:"--font-poppins",
+const inter = Inter({
+  variable:"--font-inter",
   subsets:["latin"],
   weight:["300","400","500","600","700"]
 })
@@ -19,6 +19,9 @@ const poppins = Poppins({
 export const metadata: Metadata = {
   title: "GoFishi - Sewa Perahu Mancing",
   description: "Marketplace Sewa Perahu dan Pemancingan",
+  icons: {
+    icon: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({
@@ -29,24 +32,29 @@ export default function RootLayout({
   return (
     <html lang="id">
       <head>
-        <script 
-          src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&libraries=places`} 
-          async 
+        <script
+          src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&libraries=places`}
+          async
           defer
         ></script>
       </head>
       <body
-        className={`${poppins.className} antialiased`}
+        className={`${inter.className} antialiased`}
       >
-        <LayoutWrapper>
+        <ClerkProvider
+          signInFallbackRedirectUrl="/"
+          signUpFallbackRedirectUrl="/"
+          afterSignOutUrl="/"
+        >
+          <LayoutWrapper>
           {children}
-        </LayoutWrapper>
-        <RegisterModal/>
-        <LoginModal/>
-        <Toaster/>
-        <CreateListingModal/>
-        <EditListingModal/>
-        <FilterModal/>
+          </LayoutWrapper>
+
+          <Toaster/>
+          <CreateListingModal/>
+          <EditListingModal/>
+          <FilterModal/>
+        </ClerkProvider>
       </body>
     </html>
   );

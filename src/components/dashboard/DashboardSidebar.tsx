@@ -72,7 +72,7 @@ export default function DashboardSidebar({ role }: SidebarProps) {
   ];
 
   return (
-    <aside className="w-64 bg-white border-r border-gray-200 min-h-[calc(100vh-6rem)] hidden md:block">
+    <aside className="w-64 bg-canvas border-r border-default min-h-[calc(100vh-6rem)] hidden md:block">
       <div className="flex flex-col gap-2 p-4">
         {routes.map((route) => (
           <Link
@@ -82,7 +82,7 @@ export default function DashboardSidebar({ role }: SidebarProps) {
               "flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg transition-colors",
               route.active 
                 ? "bg-primary/10 text-primary" 
-                : "text-gray-600 hover:bg-gray-50"
+                : "text-muted hover:bg-muted"
             )}
           >
             <route.icon size={20} />

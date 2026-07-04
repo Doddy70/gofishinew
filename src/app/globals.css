@@ -11,8 +11,8 @@
   --color-plus: #92174d;
   --color-ink: #222222;
   --color-body: #3f3f3f;
-  --color-muted: #6a6a6a;
-  --color-muted-soft: #929292;
+  --color-muted: #717171;
+  --color-muted-soft: #b0b0b0;
   --color-hairline: #dddddd;
   --color-hairline-soft: #ebebeb;
   --color-border-strong: #c1c1c1;
@@ -74,4 +74,135 @@ input[type="number"]::-webkit-inner-spin-button {
 
 .no-scrollbar::-webkit-scrollbar {
   display: none; /* Chrome, Safari */
+}
+
+/* Date Picker Overrides */
+.airbnb-date-picker {
+  width: 100%;
+}
+.airbnb-date-picker .rdrCalendarWrapper {
+  width: 100%;
+  font-family: var(--font-family);
+  color: var(--color-ink);
+}
+.airbnb-date-picker .rdrMonthAndYearWrapper {
+  padding-top: 10px;
+}
+.airbnb-date-picker .rdrMonthAndYearPickers select {
+  color: var(--color-ink);
+  font-weight: 600;
+}
+.airbnb-date-picker .rdrDay {
+  height: 44px;
+  background: transparent;
+  color: var(--color-ink);
+}
+.airbnb-date-picker .rdrDayNumber span {
+  font-family: var(--font-family);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-ink);
+}
+.airbnb-date-picker .rdrDayToday .rdrDayNumber span::after {
+  background: var(--color-ink);
+  bottom: 2px;
+}
+
+/* Reset react-date-range default borders and backgrounds */
+.airbnb-date-picker .rdrSelected,
+.airbnb-date-picker .rdrInRange,
+.airbnb-date-picker .rdrStartEdge,
+.airbnb-date-picker .rdrEndEdge {
+  background: none;
+  background-color: transparent !important;
+  border-radius: 0;
+}
+
+/* The In Range background (Light gray spanning between days) */
+.airbnb-date-picker .rdrInRange {
+  background-color: var(--color-surface-soft) !important;
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: 0;
+  right: 0;
+  z-index: 0;
+}
+
+/* Base style for the rounded circle on Start and End */
+.airbnb-date-picker .rdrStartEdge::after,
+.airbnb-date-picker .rdrEndEdge::after,
+.airbnb-date-picker .rdrSelected::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  bottom: 2px;
+  left: 2px;
+  right: 2px;
+  background-color: var(--color-ink);
+  border-radius: 50%;
+  z-index: 1;
+}
+
+/* Connect the Start edge to the right */
+.airbnb-date-picker .rdrStartEdge::before {
+  content: '';
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: 50%;
+  right: 0;
+  background-color: var(--color-surface-soft);
+  z-index: 0;
+}
+
+/* Connect the End edge to the left */
+.airbnb-date-picker .rdrEndEdge::before {
+  content: '';
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: 0;
+  right: 50%;
+  background-color: var(--color-surface-soft);
+  z-index: 0;
+}
+
+/* If Start and End are the same, don't show connections */
+.airbnb-date-picker .rdrStartEdge.rdrEndEdge::before {
+  display: none;
+}
+
+/* Fix text colors */
+.airbnb-date-picker .rdrDay:not(.rdrDayPassive) .rdrInRange ~ .rdrDayNumber span {
+  color: var(--color-ink);
+}
+.airbnb-date-picker .rdrDay:not(.rdrDayPassive) .rdrStartEdge ~ .rdrDayNumber span,
+.airbnb-date-picker .rdrDay:not(.rdrDayPassive) .rdrEndEdge ~ .rdrDayNumber span,
+.airbnb-date-picker .rdrDay:not(.rdrDayPassive) .rdrSelected ~ .rdrDayNumber span {
+  color: var(--color-on-dark);
+  z-index: 2;
+  position: relative;
+}
+
+/* Hover state for days */
+.airbnb-date-picker .rdrDay:hover:not(.rdrDayPassive):not(.rdrDayDisabled) .rdrDayNumber span {
+  background-color: var(--color-surface-strong);
+  border-radius: 50%;
+  color: var(--color-ink);
+}
+/* Ensure selected text stays white on hover */
+.airbnb-date-picker .rdrDay:hover:not(.rdrDayPassive):not(.rdrDayDisabled) .rdrStartEdge ~ .rdrDayNumber span,
+.airbnb-date-picker .rdrDay:hover:not(.rdrDayPassive):not(.rdrDayDisabled) .rdrEndEdge ~ .rdrDayNumber span,
+.airbnb-date-picker .rdrDay:hover:not(.rdrDayPassive):not(.rdrDayDisabled) .rdrSelected ~ .rdrDayNumber span {
+  background-color: transparent;
+  color: var(--color-on-dark);
+}
+
+.airbnb-date-picker .rdrDayDisabled {
+  background-color: transparent;
+}
+.airbnb-date-picker .rdrDayDisabled .rdrDayNumber span {
+  color: var(--color-muted-soft);
+  text-decoration: line-through;
 }

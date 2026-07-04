@@ -10,26 +10,28 @@ export class DashboardRepository {
   }
 
   async getTotalReservations(): Promise<number> {
-    return prisma.reservation.count();
+    return prisma.tripBooking.count();
   }
 
   // --- NEW: Financial & Operational Metrics ---
   
   async getGrossMerchandiseValue(): Promise<number> {
-    const result = await prisma.reservation.aggregate({
+    const result = await prisma.tripBooking.aggregate({
       _sum: {
-        totalPrice: true,
+        totalAmount: true,
       },
     });
-    return result._sum.totalPrice || 0;
+    return result._sum.totalAmount || 0;
   }
 
   async getActiveReservationsCount(): Promise<number> {
     const now = new Date();
-    return prisma.reservation.count({
+    return prisma.tripBooking.count({
       where: {
-        startDate: { lte: now },
-        endDate: { gte: now },
+        tripMaster: {
+          dateStart: { lte: now },
+          dateEnd: { gte: now },
+        }
       },
     });
   }

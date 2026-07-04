@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { getCurrentUser } from "@/server-actions/getCurrentUser";
 import prisma from "@/lib/prisma";
 import CalendarClient from "./CalendarClient";

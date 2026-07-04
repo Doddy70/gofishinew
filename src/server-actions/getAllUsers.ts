@@ -17,7 +17,7 @@ export async function getAllUsers() {
         _count: {
           select: {
             listings: true,
-            reservations: true,
+            // reservations: true,
           }
         }
       }

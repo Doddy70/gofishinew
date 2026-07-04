@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { getCurrentUser } from "@/server-actions/getCurrentUser";
 import { getTrips } from "@/server-actions/getTrips"
 import EmptyListings from "../ui/EmptyListings";

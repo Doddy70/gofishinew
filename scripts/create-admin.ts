@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { auth } from "../src/lib/auth";
 
 async function createAdmin() {

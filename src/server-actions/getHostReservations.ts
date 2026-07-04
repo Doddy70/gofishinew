@@ -9,14 +9,20 @@ export async function getKaptenReservations() {
       return [];
     }
 
-    const reservations = await prisma.reservation.findMany({
+    const reservations = await prisma.tripBooking.findMany({
       where: {
-        listing: {
-          userId: currentUser.id,
+        tripMaster: {
+          listing: {
+            userId: currentUser.id,
+          },
         },
       },
       include: {
-        listing: true,
+        tripMaster: {
+          include: {
+            listing: true,
+          },
+        },
         user: true,
       },
       orderBy: {
