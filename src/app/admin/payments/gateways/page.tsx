@@ -1,4 +1,4 @@
-import { LuCreditCard, LuCheckCircle, LuSettings, LuWallet } from "react-icons/lu";
+import { LuCreditCard, LuCheck, LuSettings, LuWallet } from "react-icons/lu";
 
 export default function PaymentGatewaysPage() {
   return (
@@ -18,7 +18,7 @@ export default function PaymentGatewaysPage() {
         <div className="bg-white p-6 md:p-8 rounded-[32px] border border-gray-100 shadow-xl shadow-gray-100/50 flex flex-col gap-6 relative overflow-hidden">
           <div className="absolute top-0 right-0 p-6">
             <span className="flex items-center gap-1 text-xs font-bold text-green-600 bg-green-50 px-3 py-1 rounded-full">
-              <LuCheckCircle size={14} /> Aktif Utama
+              <LuCheck size={14} /> Aktif Utama
             </span>
           </div>
           

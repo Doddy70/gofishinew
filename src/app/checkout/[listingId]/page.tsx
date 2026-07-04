@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { LuCheckCircle, LuWallet, LuUser } from "react-icons/lu";
+import { LuCheck, LuWallet, LuUser } from "react-icons/lu";
 
 export default function CheckoutPage({ params }: { params: { listingId: string } }) {
   const router = useRouter();
@@ -91,7 +91,7 @@ export default function CheckoutPage({ params }: { params: { listingId: string }
               </div>
             </div>
             <p className="text-xs text-gray-400 font-medium mt-3 flex items-center gap-1">
-              <LuCheckCircle className="text-green-500" /> Anda tidak perlu login. Cukup masukkan email aktif.
+              <LuCheck className="text-green-500" /> Anda tidak perlu login. Cukup masukkan email aktif.
             </p>
           </div>
 
