@@ -48,3 +48,4 @@ design-system/
 scripts/
 *.md
 *.png
+.extract-design-system/
