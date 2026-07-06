@@ -2,107 +2,174 @@
 ## GoFishi - Claude & Gemini Multi-Agent Workflow
 
 **Date:** 2026-07-06
+**Last Updated:** 2026-07-06 (Added Navbar Implementation Tasks)
 **Purpose:** Enable parallel implementation by Claude & Gemini agents
 
 ---
 
-## 📊 DEPENDENCY ANALYSIS
+## 📊 UPDATED DEPENDENCY ANALYSIS
 
 ```
-┌─────────────────────────────────────────────────────────────────────┐
-│                         DEPENDENCY GRAPH                            │
-├─────────────────────────────────────────────────────────────────────┤
-│                                                                     │
-│   T-01: Schema Migration                                           │
-│         │                                                           │
-│         ├──────────────────┐                                        │
-│         ▼                  ▼                                        │
-│   T-02: Pricing API    T-03: Calendar API                          │
-│         │                  │                                        │
-│         │             ┌────┴────┐                                   │
-│         │             ▼         ▼                                   │
+┌─────────────────────────────────────────────────────────────────────────┐
+│                         DEPENDENCY GRAPH (UPDATED)                      │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                         │
+│  ════════════════════════════════════════════════════════════════════    │
+│  PHASE 0: NAVBAR (GEMINI - Priority)                                    │
+│  ════════════════════════════════════════════════════════════════════    │
+│                                                                         │
+│  T-N1: HeroSearch → API          ┐                                      │
+│  T-N2: /perahu → Filter API     ├─► TRACK A (GEMINI)                  │
+│  T-N3: FilterPills → Dynamic     │    (Navbar Implementation)           │
+│  T-N4: MobileSearchModal         │                                      │
+│                                  │                                      │
+│  ════════════════════════════════════════════════════════════════════    │
+│  PHASE 1: BACKEND CORE (CLAUDE)                                         │
+│  ════════════════════════════════════════════════════════════════════    │
+│                                                                         │
+│  T-01: Schema Migration                                                │
+│         │                                                              │
+│         ├──────────────────┐                                           │
+│         ▼                  ▼                                           │
+│  T-02: Pricing API    T-03: Calendar API                               │
+│         │                  │                                           │
+│         │             ┌────┴────┐                                      │
+│         │             ▼         ▼                                      │
 │         │        T-04: Blocked  T-05: Price Overrides               │
-│         │         Dates          CRUD                               │
-│         │             └────┬────┘                                   │
-│         │                  │                                        │
-│         │                  ▼                                        │
-│         │            Frontend UI Integration                        │
-│         │            (Gemini handles)                               │
-│         │                                                           │
-│   ════════════════════════════════════════════════════════════     │
-│                                                                     │
-│   TRACK B (GEMINI - Independent from T-01)                         │
-│                                                                     │
-│   T-06: Pusher Auth API ──┐                                         │
-│   T-07: useChatPusher ────┼──► T-08: ChatWindow.tsx                │
-│   T-09: TransactionSchema ─┤                                        │
-│   T-10: Transactions API ─┘                                        │
-│                                                                     │
-└─────────────────────────────────────────────────────────────────────┘
+│         │         Dates          CRUD                                  │
+│                                                                         │
+│  ════════════════════════════════════════════════════════════════════    │
+│  PHASE 2: REAL-TIME (GEMINI - Independent)                             │
+│  ════════════════════════════════════════════════════════════════════    │
+│                                                                         │
+│  T-06: Pusher Auth API ──┐                                             │
+│  T-07: useChatPusher ────┼──► T-08: ChatWindow.tsx                   │
+│  T-09: TransactionSchema ─┤                                            │
+│  T-10: Transactions API ─┘                                             │
+│                                                                         │
+└─────────────────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## 🎯 TRACK ALLOCATION
+## 🎯 TRACK ALLOCATION (UPDATED)
+
+### Phase 0: Navbar Implementation (GEMINI) ⚡ PRIORITY
+**Focus:** Airbnb-style navbar dengan Filter API integration
+
+| Task | Description | Dependencies | Status |
+|------|-------------|--------------|--------|
+| T-N1 | HeroSearch → `/api/locations/search` | API Ready | ⏳ Gemini |
+| T-N2 | /perahu → `/api/listings/search` | API Ready | ⏳ Gemini |
+| T-N3 | FilterPills → `/api/listings/filters` | API Ready | ⏳ Gemini |
+| T-N4 | MobileSearchModal (full implementation) | T-N1 | ⏳ Gemini |
 
 ### Track A: Backend Core (CLAUDE)
 **Focus:** Database schema, pricing, calendar APIs
 
-| Task | Description | Dependencies |
-|------|-------------|--------------|
-| T-01 | Schema: Add weekendPrice, holidayPrice, targetFish, tackleInventory, meetingPoint | None |
-| T-02 | API: GET /api/pricing/calculate | T-01 |
-| T-03 | API: GET /api/listings/[id]/calendar | T-01 |
-| T-04 | API: blocked-dates CRUD | T-01 |
-| T-05 | API: price-overrides CRUD | T-01 |
+| Task | Description | Dependencies | Status |
+|------|-------------|--------------|--------|
+| T-01 | Schema: Add weekendPrice, holidayPrice, targetFish, tackleInventory, meetingPoint | None | ⬜ Pending |
+| T-02 | API: GET /api/pricing/calculate | T-01 | ⬜ Pending |
+| T-03 | API: GET /api/listings/[id]/calendar | T-01 | ⬜ Pending |
+| T-04 | API: blocked-dates CRUD | T-01 | ⬜ Pending |
+| T-05 | API: price-overrides CRUD | T-01 | ⬜ Pending |
 
 ### Track B: Real-time & Transactions (GEMINI)
 **Focus:** Chat, notifications, earnings (Independent track)
 
-| Task | Description | Dependencies |
-|------|-------------|--------------|
-| T-06 | API: POST /api/pusher/auth | None |
-| T-07 | Hook: src/hooks/useChatPusher.ts | T-06 |
-| T-08 | Component: src/components/chat/ChatWindow.tsx | T-06, T-07 |
-| T-09 | Schema: Add TransactionHistory model | None |
-| T-10 | API: GET /api/captain/transactions | T-09 |
+| Task | Description | Dependencies | Status |
+|------|-------------|--------------|--------|
+| T-06 | API: POST /api/pusher/auth | None | ⬜ Pending |
+| T-07 | Hook: src/hooks/useChatPusher.ts | T-06 | ⬜ Pending |
+| T-08 | Component: src/components/chat/ChatWindow.tsx | T-06, T-07 | ⬜ Pending |
+| T-09 | Schema: Add TransactionHistory model | None | ⬜ Pending |
+| T-10 | API: GET /api/captain/transactions | T-09 | ⬜ Pending |
 
 ---
 
-## 🔄 SHARED CONTEXT
+## 🏠 NAVBAR IMPLEMENTATION (T-N1 to T-N4)
 
-### For Both Agents
+### Reference Documents
+| Document | Purpose |
+|----------|---------|
+| `.agents/GEMINI_NAVBAR_DIRECTIVE.md` | Primary implementation guide |
+| `.maestro/AIRBNB_NAVIGATION_ANALYSIS.md` | Airbnb UI analysis |
+| `airbnb-desktop-homepage.png` | Screenshot reference |
+| `airbnb-desktop-search.png` | Screenshot reference |
 
+### Design Reference: Airbnb Patterns
+
+#### Desktop Homepage Header
 ```
-SHARED FILES:
-├── prisma/schema.prisma              ← T-01 modifies
-├── .agents/HANDOFF_PROTOCOL.md       ← Both update
-├── .maestro/decisions.jsonl          ← Both append
-└── .maestro/sessions/2026-07-06_*    ← Both update
+┌────────────────────────────────────────────────────────────────────────┐
+│  ┌─────────┐                                                         │
+│  │  Airbnb │  Beranda  |  Jelajahi  |  Pengalaman  |  Layanan     │
+│  └─────────┘                                                         │
+│                                                                        │
+│  ┌────────────────────────────────────────────────────────────────┐  │
+│  │  📍 Lokasi      │  📅 Kapan         │  👤 Tamu         🔍   │  │
+│  │  "Cari dest..."   "Tambahkan tanggal"   "Tambahkan tamu"        │  │
+│  └────────────────────────────────────────────────────────────────┘  │
+│                                                                        │
+│  [Populer] [Seni & budaya] [Pantai] [Pegulauan] [Alam terbuka] [...] │
+└────────────────────────────────────────────────────────────────────────┘
 ```
 
-### Claude Reads Before Starting
+#### Mobile Header
 ```
-GEMINI FILES (Reference Only):
-├── .agents/GEMINI_HANDOFF_KAPTEN_CHANGES.md  ← Read for spec
-├── .agents/GEMINI_TASK_*.md                   ← Any Gemini tasks
-└── src/components/chat/*.tsx                  ← Chat components (if exist)
+┌────────────────────────────────────┐
+│  ┌──────┐                    [👤] │
+│  │ Airbnb│    ┌──────────────┐    │
+│  └──────┘    │ 🔍 Mulai     │    │
+│              │    pencarian │    │
+│              └──────────────┘    │
+│  ──────────────────────────────── │
+│  [🏠]    [🔍]    [❤️]    [👤]   │
+└────────────────────────────────────┘
 ```
 
-### Gemini Reads Before Starting
-```
-CLAUDE FILES (Reference Only):
-├── src/app/api/listings/search/route.ts        ← API pattern reference
-├── src/app/api/listings/filters/route.ts       ← API pattern reference
-├── src/app/api/notifications/route.ts          ← Similar to what T-10 needs
-└── prisma/schema.prisma                        ← Current schema
-```
+### Component Checklist
+
+#### Desktop Components
+- [ ] **Search Bar (3-field pill)** - Location + Dates + Guests
+- [ ] **Filter Chips** - Dynamic from `/api/listings/filters`
+- [ ] **Category Tabs** - Populer, Beach, Mountain, etc
+- [ ] **Map Price Pills** - Floating price markers
+- [ ] **Scroll Animation** - Hide/show navbar on scroll
+
+#### Mobile Components
+- [ ] **Top Search Pill** - Tappable, opens modal
+- [ ] **MobileSearchModal** - Full-screen with framer-motion
+- [ ] **Bottom Nav** - 4 tabs (Home, Search, Favorites, Profile)
+- [ ] **Quick Filter Chips** - Horizontal scroll
 
 ---
 
 ## 📋 IMPLEMENTATION ORDER
 
-### CLAUDE starts with:
+### PHASE 0: Gemini starts NOW (Navbar Priority)
+
+```
+1. T-N1: HeroSearch → /api/locations/search
+   └── File: src/components/home/HeroSearch.tsx
+   └── Connect location autocomplete to API
+   
+2. T-N2: /perahu → /api/listings/search
+   └── File: src/app/perahu/page.tsx or src/components/listings/Listings.tsx
+   └── Replace old endpoint with Filter API
+   
+3. T-N3: FilterPills → /api/listings/filters
+   └── File: src/components/search/FilterPills.tsx (CREATE)
+   └── Fetch metadata from API, render dynamic chips
+   
+4. T-N4: MobileSearchModal
+   └── File: src/modals/MobileSearchModal.tsx (CREATE)
+   └── Full-screen search modal with animations
+```
+
+### PHASE 1: Claude (After Gemini confirms Navbar done)
+
 ```
 1. T-01: Schema Migration
    └── Add fields to prisma/schema.prisma
@@ -121,7 +188,8 @@ CLAUDE FILES (Reference Only):
    └── Commit: "feat: Add calendar management APIs"
 ```
 
-### GEMINI starts with:
+### PHASE 2: Gemini (Parallel with Phase 1)
+
 ```
 1. T-06: Pusher Auth API
    └── src/app/api/pusher/auth/route.ts
@@ -130,7 +198,7 @@ CLAUDE FILES (Reference Only):
 2. T-07: Chat Hook
    └── src/hooks/useChatPusher.ts
    
-3. T-09: TransactionHistory Schema (after CLAUDE confirms T-01)
+3. T-09: TransactionHistory Schema (after Claude confirms T-01)
    └── Add to prisma/schema.prisma
    └── npx prisma db push
    
@@ -141,6 +209,14 @@ CLAUDE FILES (Reference Only):
 ---
 
 ## 🔗 HANDOFF PROTOCOL
+
+### After T-N1 to T-N4 (Navbar) Complete
+
+```
+GEMINI → CLAUDE:
+"Navbar implementation complete. Filter API integrated.
+Ready for Calendar API integration (Track A)."
+```
 
 ### After T-01 (Schema) Complete
 
@@ -173,78 +249,86 @@ Frontend integration can now proceed."
 
 ## 📁 FILE PATHS (CLEAR BOUNDARIES)
 
-### CLAUDE Owns:
+### PHASE 0 - GEMINI (Navbar):
+```
+src/
+├── components/
+│   ├── home/
+│   │   └── HeroSearch.tsx              ← T-N1 (Modify)
+│   ├── search/
+│   │   └── FilterPills.tsx            ← T-N3 (CREATE)
+│   ├── navbar/
+│   │   ├── Navbar.tsx                 ← T-N1 to T-N4 (Modify)
+│   │   └── BottomNav.tsx               ← Already done
+│   └── listings/
+│       ├── Listings.tsx                ← T-N2 (Modify)
+│       └── ListingsMap.tsx              ← T-N3 (Add price pills)
+├── app/
+│   └── perahu/
+│       └── page.tsx                    ← T-N2 (Modify)
+└── modals/
+    └── MobileSearchModal.tsx           ← T-N4 (CREATE)
+```
+
+### TRACK A - CLAUDE (Backend):
 ```
 src/app/api/
 ├── pricing/
-│   └── calculate/route.ts          ← T-02
+│   └── calculate/route.ts              ← T-02
 ├── listings/[listingId]/
-│   ├── calendar/route.ts            ← T-03
-│   ├── blocked-dates/               ← T-04
+│   ├── calendar/route.ts                ← T-03
+│   ├── blocked-dates/                   ← T-04
 │   │   ├── route.ts
 │   │   └── [id]/route.ts
-│   └── price-overrides/             ← T-05
+│   └── price-overrides/                 ← T-05
 │       ├── route.ts
 │       └── [id]/route.ts
-
-prisma/schema.prisma                   ← T-01
+prisma/schema.prisma                     ← T-01
 ```
 
-### GEMINI Owns:
+### TRACK B - GEMINI (Chat):
 ```
-src/app/api/
-├── pusher/
-│   └── auth/route.ts                ← T-06
-├── chat/
-│   ├── conversations/route.ts
-│   ├── [id]/messages/route.ts
-│   ├── typing/route.ts
-│   └── read/route.ts
-└── captain/
-    └── transactions/route.ts        ← T-10
-
 src/
+├── app/api/
+│   ├── pusher/
+│   │   └── auth/route.ts               ← T-06
+│   ├── chat/
+│   │   ├── conversations/route.ts
+│   │   ├── [id]/messages/route.ts
+│   │   ├── typing/route.ts
+│   │   └── read/route.ts
+│   └── captain/
+│       └── transactions/route.ts        ← T-10
 ├── hooks/
-│   └── useChatPusher.ts             ← T-07
-├── components/
-│   └── chat/
-│       └── ChatWindow.tsx           ← T-08
-
-prisma/schema.prisma                   ← T-09 (TransactionHistory only)
-```
-
-### DO NOT TOUCH (Other Agent's Territory):
-```
-CLAUDE must NOT modify:
-├── src/components/chat/
-├── src/hooks/useChatPusher.ts
-└── src/app/api/pusher/
-
-GEMINI must NOT modify:
-├── src/app/api/pricing/
-├── src/app/api/listings/[id]/calendar/
-├── src/app/api/listings/[id]/blocked-dates/
-└── src/app/api/listings/[id]/price-overrides/
+│   └── useChatPusher.ts                ← T-07
+└── components/chat/
+    └── ChatWindow.tsx                  ← T-08
 ```
 
 ---
 
 ## ✅ VERIFICATION CHECKLIST
 
-### CLAUDE checks before marking T-01 done:
-- [ ] Schema has all new fields
-- [ ] `npx prisma db push` successful
-- [ ] `npx prisma generate` successful
-- [ ] Handed off to Gemini
+### PHASE 0 - GEMINI (Navbar):
+- [ ] T-N1: HeroSearch fetches from `/api/locations/search`
+- [ ] T-N2: /perahu page uses `/api/listings/search`
+- [ ] T-N3: FilterPills renders from `/api/listings/filters`
+- [ ] T-N4: MobileSearchModal opens with animations
+- [ ] Desktop: Search bar, filter chips, scroll behavior work
+- [ ] Mobile: Bottom nav, search modal, quick filters work
+- [ ] HANDOFF_PROTOCOL.md updated
 
-### CLAUDE checks before marking Track A done:
+### TRACK A - CLAUDE:
+- [ ] T-01: Schema has all new fields
+- [ ] T-01: `npx prisma db push` successful
+- [ ] T-01: `npx prisma generate` successful
 - [ ] T-02: GET /api/pricing/calculate works
 - [ ] T-03: GET /api/listings/[id]/calendar works
 - [ ] T-04: POST/DELETE blocked-dates works
 - [ ] T-05: POST/DELETE price-overrides works
 - [ ] HANDOFF_PROTOCOL.md updated
 
-### GEMINI checks before marking Track B done:
+### TRACK B - GEMINI:
 - [ ] T-06: Pusher auth works
 - [ ] T-07: useChatPusher connects
 - [ ] T-08: ChatWindow renders
@@ -254,48 +338,34 @@ GEMINI must NOT modify:
 
 ---
 
-## 📊 PARALLEL EXECUTION TIMELINE
+## 📊 PARALLEL EXECUTION TIMELINE (UPDATED)
 
 ```
-HOUR 0          HOUR 1          HOUR 2          HOUR 3+
-─────────        ─────────       ─────────       ─────────
-┌─────────┐
-│ T-01    │
-│ Schema  │───────────────────────────────────────────────
-└────┬────┘                                             
-     │                                                   
-     ├──────────────────────────────────────────────────►
-     │ T-02: Pricing API                                 
-     │                                                    
-     ├──────────────────────────────────────────────────►
-     │ T-03: Calendar API                                
-     │                                                    
-     ├──────────────────────────────────────────────────►
-     │ T-04, T-05: Blocked/Price APIs                    
-     │                                                    
-══════════════════════════════════════════════════════════
-GEMINI                                                          
-─────────       ─────────       ─────────       ─────────
-┌─────────┐     ┌─────────┐
-│ T-06    │     │ T-07    │
-│ Pusher  │────►│ Chat    │
-│ Auth    │     │ Hook    │
-└────┬────┘     └────┬────┘     ┌─────────┐
-     │               │         │ T-09    │
-     │               │         │ Trans.  │──────────────►
-     │               │         │ Schema  │
-     │               │         └────┬────┘
-     │               │              │
-     │               └──────────────┼─────────────────────
-     │                              │ T-08, T-10         
-     │                              │ Chat + Trans.       
-     │                              │ APIs               
-     └──────────────────────────────┴─────────────────────
+PHASE 0 (Navbar - Gemini)         PHASE 1 (Backend - Claude)
+──────────────                    ────────────────
+HOUR 0-2                          HOUR 0+
+┌─────────────────────┐           ┌─────────────────────┐
+│ T-N1: HeroSearch    │           │ T-01: Schema       │
+│ T-N2: /perahu API   │──────────►│ (Wait for Gemini)   │
+│ T-N3: FilterPills   │           └─────────────────────┘
+│ T-N4: MobileModal   │                        │
+└─────────────────────┘                        │
+                                               ├────────────────►
+PHASE 2 (Chat - Gemini)                        │ T-02 to T-05
+───────────────                                 │ Calendar APIs
+HOUR 0+                                        │
+┌─────────────────────┐                        │
+│ T-06: Pusher Auth   │                        │
+│ T-07: useChatPusher │──────┐                  │
+│ T-09: Trans Schema   │      │                  │
+│ T-08, T-10: APIs    │◄─────┘                  │
+└─────────────────────┘                        │
+                                               
+───────────────────────────────────────────────────────────────────
+Estimated Total Time (All Phases, Parallel): ~6 hours
+Estimated Total Time (Sequential): ~12 hours
+Speed Improvement: 50% faster
 ```
-
-**Estimated Total Time (Parallel):** ~4 hours
-**Estimated Total Time (Sequential):** ~7 hours
-**Speed Improvement:** 43% faster
 
 ---
 
@@ -316,19 +386,41 @@ If both agents touch the same file:
 ### Agent-to-Agent Messages Format
 ```json
 {
-  "from": "claude",
-  "to": "gemini",
+  "from": "gemini",
+  "to": "claude",
   "type": "handoff",
-  "task": "T-01",
+  "phase": "0",
+  "tasks": ["T-N1", "T-N2", "T-N3", "T-N4"],
   "status": "complete",
-  "message": "Schema migrated. TransactionHistory can be added.",
-  "files": ["prisma/schema.prisma"],
-  "timestamp": "2026-07-06T12:30:00Z"
+  "message": "Navbar implementation complete. Filter API integrated.",
+  "timestamp": "2026-07-06T14:00:00Z"
 }
 ```
 
 ---
 
-**Document Version:** 1.0
+## 📊 TASK SUMMARY
+
+| Phase | Task | Owner | Status | Priority |
+|-------|------|-------|--------|----------|
+| 0 | T-N1: HeroSearch API | Gemini | ⏳ | 🔴 HIGH |
+| 0 | T-N2: /perahu API | Gemini | ⏳ | 🔴 HIGH |
+| 0 | T-N3: FilterPills | Gemini | ⏳ | 🔴 HIGH |
+| 0 | T-N4: MobileSearchModal | Gemini | ⏳ | 🔴 HIGH |
+| 1 | T-01: Schema Migration | Claude | ⬜ | 🔴 HIGH |
+| 1 | T-02: Pricing API | Claude | ⬜ | 🔴 HIGH |
+| 1 | T-03: Calendar API | Claude | ⬜ | 🔴 HIGH |
+| 1 | T-04: Blocked Dates | Claude | ⬜ | 🔴 HIGH |
+| 1 | T-05: Price Overrides | Claude | ⬜ | 🔴 HIGH |
+| 2 | T-06: Pusher Auth | Gemini | ⬜ | 🟡 MED |
+| 2 | T-07: useChatPusher | Gemini | ⬜ | 🟡 MED |
+| 2 | T-08: ChatWindow | Gemini | ⬜ | 🟡 MED |
+| 2 | T-09: Trans. Schema | Gemini | ⬜ | 🟢 LOW |
+| 2 | T-10: Transactions API | Gemini | ⬜ | 🟢 LOW |
+
+---
+
+**Document Version:** 2.0 (Updated with Navbar Tasks)
 **Status:** READY FOR PARALLEL EXECUTION
-**Agents:** CLAUDE (Track A) + GEMINI (Track B)
+**Agents:** CLAUDE (Track A) + GEMINI (Phase 0 & Track B)
+**Priority:** PHASE 0 (Navbar) → PHASE 1 (Backend) → PHASE 2 (Chat)
