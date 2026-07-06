@@ -7,10 +7,12 @@
 - [x] Phase 5: Search & Filter API (Claude) - **NEW** Airbnb-style endpoints implemented
 - [x] Phase 5: Gap Analysis (Claude) - Audit GEMINI_HANDOFF_KAPTEN_CHANGES.md
 - [x] Phase 5: Navbar Directive (Claude) - **NEW** Directive for Gemini consistency
-- [ ] Phase 5: Navbar Implementation (Gemini) - Following directive
+- [x] Phase 5: Navbar Implementation (Gemini) - Following directive
+- [x] Phase 5: Location Page Directive (Claude) - **NEW** Jakarta saltwater locations
+- [ ] Phase 5: Location Pages (T-L1 to T-L8) - Gemini
 - [ ] Phase 5: Schema Migration (T-01) - Missing fields
 - [ ] Phase 5: Calendar & Pricing APIs (T-02 to T-05) - Backend
-- [ ] Phase 5: Pusher Chat (T-06 to T-08) - Gemini
+- [ ] Phase 5: Pusher Chat (T-06 to T-10) - Gemini
 - [ ] Phase 5: Midtrans Sandbox & E2E (Claude)
 
 ## Last Action
@@ -19,10 +21,12 @@
   - **[2026-07-06]** Mengimplementasikan `GET /api/listings/filters` - Metadata API untuk filter dinamis.
   - **[2026-07-06]** Audit `GEMINI_HANDOFF_KAPTEN_CHANGES.md` - Found 35% completion, created comprehensive implementation workflow.
   - **[2026-07-06]** Buat `GEMINI_NAVBAR_DIRECTIVE.md` - Direction untuk Gemini konsisten mengkloning navbar Airbnb.
+  - **[2026-07-06]** Research Jakarta saltwater fishing spots - Ancol Marina, Kepulauan Seribu, Sunda Kelapa.
+  - **[2026-07-06]** Buat `GEMINI_LOCATION_PAGE_DIRECTIVE.md` dan `GOFISHI_MARKET_LOCATIONS.md` - Location page implementation untuk market Jakarta.
 
 - **Gemini (Frontend):**
-  - **[Wait]** Navbar Implementation - Following directive `GEMINI_NAVBAR_DIRECTIVE.md`
-  - Standarisasi Navbar UI (shrink scroll logic, search pill).
+  - **[2026-07-06]** Navbar Implementation - Terapkan directive `GEMINI_NAVBAR_DIRECTIVE.md`. Menyempurnakan layout `/perahu` di desktop (Sticky Map flush edges, layout constraints h-auto, penyesuaian padding top).
+  - **[2026-07-06]** Memperbarui tampilan Navbar Mobile khusus `/perahu` menjadi format Search Pill + circular Filter Icon ala Airbnb.
   - Ekstraksi `CheckoutPriceBreakdown.tsx` dari `BookingCard.tsx`.
   - Membuat ulang `dashboard/reservations/ReservationClient.tsx`.
   - Mengkloning UI/UX Airbnb untuk Halaman Detail Perahu (`ListingDetailClient.tsx`).
@@ -30,9 +34,9 @@
 
 ## Next Steps / Requirement Implementation Chain
 
-### IMMEDIATE (Gemini):
-1. **Navbar Directive** - Baca `.agents/GEMINI_NAVBAR_DIRECTIVE.md` untuk implementasi konsisten
-2. **Filter Integration** - Hubungkan HeroSearch ke `/api/locations/search`, `/perahu` ke `/api/listings/search`
+### IMMEDIATE (Gemini / Claude):
+1. **Filter Modal Implementation (Gemini)** - Buat UI `SearchFilterModal.tsx` yang menggunakan `api/listings/filters` dan terhubung dengan filter button di Navbar mobile & desktop.
+2. **Schema Migration (Claude)** - (T-01) weekendPrice, holidayPrice, dll.
 
 ### BACKLOG (Parallel Tracks):
 
