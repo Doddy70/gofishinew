@@ -178,6 +178,7 @@ model Listing {
   addOns         AddOn[]
   catchGalleries CatchGallery[]
   reviews        UserReview[]
+  priceOverrides PriceOverride[]
 
   amenities Amenity[]
 
