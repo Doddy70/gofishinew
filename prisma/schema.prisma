@@ -48,6 +48,19 @@ enum PaymentStatus {
   REFUNDED
 }
 
+enum SlotTimeType {
+  MORNING_STRIKE
+  HALF_DAY
+  FULL_DAY
+  OVERNIGHT
+}
+
+enum PriceOverrideType {
+  WEEKEND
+  HOLIDAY
+  CUSTOM
+}
+
 model User {
   id            String  @id
   name          String
@@ -137,6 +150,17 @@ model Listing {
   captainName String?
   rentalType  RentalType @default(BOTH)
 
+  // ⭐ NEW: Dynamic Pricing
+  weekendPrice  Int? // Harga weekend (Rp)
+  holidayPrice  Int? // Harga holiday (Rp)
+
+  // ⭐ NEW: Fishing Info
+  targetFish     String[] @default([]) // ["Tuna", "Marlin", "GT"]
+  tackleInventory String? // Inventory alat pancing: "10 set joran Shimano\nUmpan hidup"
+
+  // ⭐ NEW: Meeting Point
+  meetingPoint String? // "Dermaga Ancol, Jam 02:00"
+
   // Map Coordinates & Location
   locationValue String // Country/Region Value/Dermaga
   latitude      Float?
@@ -180,8 +204,21 @@ model TripMaster {
 
   bookingType TripBookingType
 
+  // ⭐ NEW: Slot Type
+  slotType SlotTimeType @default(FULL_DAY) // MORNING_STRIKE, HALF_DAY, FULL_DAY, OVERNIGHT
+
   priceTotal   Int // Harga sewa 1 kapal (Private)
   pricePerSeat Int? // Harga per kursi (Sharing)
+
+  // ⭐ NEW: Trip Overrides
+  meetingTime String? // Override jam kumpul: "05:00"
+  returnTime  String? // Override jam kembali: "17:00"
+  area        String? // Override area trip: "Spot GT"
+
+  // ⭐ NEW: Special Price for this date
+  priceOverride     Int? // Harga khusus untuk tanggal ini
+  priceOverrideType PriceOverrideType? // WEEKEND, HOLIDAY, CUSTOM
+  priceOverrideLabel String? // Label: "Weekend Special"
 
   minSeats     Int @default(1)
   maxSeats     Int
@@ -424,4 +461,41 @@ model BlockedDate {
 
   @@index([listingId])
   @@map("blocked_date")
+}
+
+// ⭐ NEW: Price Override for specific dates
+model PriceOverride {
+  id       String @id @default(cuid())
+  date     DateTime
+  price    Int
+  type     PriceOverrideType // WEEKEND, HOLIDAY, CUSTOM
+  label    String? // e.g., "Weekend Special", "Natal", "New Year"
+
+  listingId String
+  listing   Listing @relation(fields: [listingId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@index([listingId])
+  @@map("price_override")
+}
+
+// ⭐ NEW: Transaction History for Captain Payout Tracking
+model TransactionHistory {
+  id        String   @id @default(cuid())
+  type      String   // "PAYOUT", "COMMISSION", "REFUND", "BOOKING"
+  amount    Int      // Amount in Rupiah
+  status    String   // "PENDING", "COMPLETED", "FAILED"
+  notes     String?
+
+  // Relations
+  userId    String
+  bookingId String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([bookingId])
+  @@map("transaction_history")
 }
