@@ -2,8 +2,28 @@
 ## GoFishi - Claude & Gemini Multi-Agent Workflow
 
 **Date:** 2026-07-06
-**Last Updated:** 2026-07-06 (Added Navbar Implementation Tasks)
+**Last Updated:** 2026-07-06 (Added Location Pages + Jakarta Market Focus)
 **Purpose:** Enable parallel implementation by Claude & Gemini agents
+
+---
+
+## 🗺️ MARKET FOCUS
+
+**GoFishi is a Saltwater Fishing Platform operating in:**
+
+| Province | Locations (Saltwater) | Priority |
+|----------|----------------------|----------|
+| Jakarta 🌊 | Ancol Marina, Kepulauan Seribu, Sunda Kelapa | 🔴 HIGH |
+| Banten 🌊 | Merak, Cilegon, Anyer | 🔴 HIGH |
+| Lampung 🌊 | Bandarlampung, Krui, Pahawang | 🟡 MED |
+| Jawa Barat 🌊 | Karimunjawa, Pangandaran, Cirebon | 🟡 MED |
+
+### Jakarta Research - Saltwater Fishing Spots
+```
+├── Ancol Marina (Hero: Pulau Bidadari) - GT, Kakap, Kembung
+├── Kepulauan Seribu (Pramuka, Kelapa) - Tuna, GT, Kerapu
+└── Sunda Kelapa (Muara Angke) - Kakap, Baronang
+```
 
 ---
 
@@ -39,7 +59,16 @@
 │         │         Dates          CRUD                                  │
 │                                                                         │
 │  ════════════════════════════════════════════════════════════════════    │
-│  PHASE 2: REAL-TIME (GEMINI - Independent)                             │
+│  PHASE 2: LOCATION PAGES (GEMINI)                                      │
+│  ════════════════════════════════════════════════════════════════════    │
+│                                                                         │
+│  T-L1 to T-L12: Location Page Components                             │
+│  - HorizontalBoatList, BoatCardHorizontal                            │
+│  - FishingTechniqueChips, AmenityFilterChips                         │
+│  - NearbyLocations, LocationCard, Breadcrumb                           │
+│                                                                         │
+│  ════════════════════════════════════════════════════════════════════    │
+│  PHASE 3: REAL-TIME (GEMINI - Independent)                             │
 │  ════════════════════════════════════════════════════════════════════    │
 │                                                                         │
 │  T-06: Pusher Auth API ──┐                                             │
@@ -59,10 +88,10 @@
 
 | Task | Description | Dependencies | Status |
 |------|-------------|--------------|--------|
-| T-N1 | HeroSearch → `/api/locations/search` | API Ready | ⏳ Gemini |
-| T-N2 | /perahu → `/api/listings/search` | API Ready | ⏳ Gemini |
-| T-N3 | FilterPills → `/api/listings/filters` | API Ready | ⏳ Gemini |
-| T-N4 | MobileSearchModal (full implementation) | T-N1 | ⏳ Gemini |
+| T-N1 | HeroSearch → `/api/locations/search` | API Ready | ✅ Done |
+| T-N2 | /perahu → `/api/listings/search` | API Ready | ✅ Done |
+| T-N3 | FilterPills → `/api/listings/filters` | API Ready | ✅ Done |
+| T-N4 | MobileSearchModal (full implementation) | T-N1 | ✅ Done |
 
 ### Track A: Backend Core (CLAUDE)
 **Focus:** Database schema, pricing, calendar APIs
@@ -74,6 +103,20 @@
 | T-03 | API: GET /api/listings/[id]/calendar | T-01 | ⬜ Pending |
 | T-04 | API: blocked-dates CRUD | T-01 | ⬜ Pending |
 | T-05 | API: price-overrides CRUD | T-01 | ⬜ Pending |
+
+### Phase 2: Location Pages (GEMINI) 🆕 NEW
+**Focus:** Airbnb-style location pages for GoFishi market (Jakarta saltwater)
+
+| Task | Description | Dependencies | Status |
+|------|-------------|--------------|--------|
+| T-L1 | Create `HorizontalBoatList.tsx` | None | ⬜ Pending |
+| T-L2 | Create `BoatCardHorizontal.tsx` | T-L1 | ⬜ Pending |
+| T-L3 | Create `FishingTechniqueChips.tsx` | None | ⬜ Pending |
+| T-L4 | Create `AmenityFilterChips.tsx` | None | ⬜ Pending |
+| T-L5 | Create `LocationCard.tsx` | None | ⬜ Pending |
+| T-L6 | Create `NearbyLocations.tsx` | T-L5 | ⬜ Pending |
+| T-L7 | Create `Breadcrumb.tsx` | None | ⬜ Pending |
+| T-L8 | Create `app/lokasi/[slug]/page.tsx` | T-L1 to T-L7 | ⬜ Pending |
 
 ### Track B: Real-time & Transactions (GEMINI)
 **Focus:** Chat, notifications, earnings (Independent track)
@@ -132,17 +175,52 @@
 ### Component Checklist
 
 #### Desktop Components
-- [ ] **Search Bar (3-field pill)** - Location + Dates + Guests
-- [ ] **Filter Chips** - Dynamic from `/api/listings/filters`
-- [ ] **Category Tabs** - Populer, Beach, Mountain, etc
-- [ ] **Map Price Pills** - Floating price markers
-- [ ] **Scroll Animation** - Hide/show navbar on scroll
+- [x] **Search Bar (3-field pill)** - Location + Dates + Guests
+- [x] **Filter Chips** - Dynamic from `/api/listings/filters`
+- [x] **Category Tabs** - Populer, Beach, Mountain, etc
+- [x] **Map Price Pills** - Floating price markers
+- [x] **Scroll Animation** - Hide/show navbar on scroll
 
 #### Mobile Components
-- [ ] **Top Search Pill** - Tappable, opens modal
-- [ ] **MobileSearchModal** - Full-screen with framer-motion
-- [ ] **Bottom Nav** - 4 tabs (Home, Search, Favorites, Profile)
-- [ ] **Quick Filter Chips** - Horizontal scroll
+- [x] **Top Search Pill** - Tappable, opens modal
+- [x] **MobileSearchModal** - Full-screen with framer-motion
+- [x] **Bottom Nav** - 4 tabs (Home, Search, Favorites, Profile)
+- [x] **Quick Filter Chips** - Horizontal scroll
+
+---
+
+## 🗺️ LOCATION PAGE IMPLEMENTATION (T-L1 to T-L8)
+
+### Reference Documents
+| Document | Purpose |
+|----------|---------|
+| `.agents/GEMINI_LOCATION_PAGE_DIRECTIVE.md` | Primary implementation guide |
+| `.maestro/GOFISHI_LOCATION_PAGE_CONCEPT.md` | Full concept |
+| `.maestro/GOFISHI_MARKET_LOCATIONS.md` | Market locations (Jakarta saltwater) |
+| `airbnb-lake-stays.png` | Airbnb reference screenshot |
+
+### MVP Location Pages (Build First)
+```
+1. /lokasi/ancol - Ancol Marina (Primary)
+2. /lokasi/kepulauan-seribu - Thousand Islands (Premium)
+3. /lokasi/sunda-kelapa - Sunda Kelapa (Urban)
+4. /lokasi/merak - Merak, Banten
+```
+
+### Component Order
+```
+Week 1:
+- T-L1: HorizontalBoatList.tsx
+- T-L2: BoatCardHorizontal.tsx
+- T-L3: FishingTechniqueChips.tsx
+- T-L4: AmenityFilterChips.tsx
+
+Week 2:
+- T-L5: LocationCard.tsx
+- T-L6: NearbyLocations.tsx
+- T-L7: Breadcrumb.tsx
+- T-L8: app/lokasi/[slug]/page.tsx
+```
 
 ---
 
@@ -188,7 +266,22 @@
    └── Commit: "feat: Add calendar management APIs"
 ```
 
-### PHASE 2: Gemini (Parallel with Phase 1)
+### PHASE 2: Gemini (Location Pages - After Navbar)
+
+```
+1. T-L1: HorizontalBoatList.tsx
+   └── src/components/location/HorizontalBoatList.tsx
+   
+2. T-L2 to T-L4: BoatCard + Chips
+   └── T-L3: FishingTechniqueChips.tsx
+   └── T-L4: AmenityFilterChips.tsx
+   
+3. T-L5 to T-L8: Location Page Structure
+   └── T-L7: Breadcrumb.tsx
+   └── T-L8: app/lokasi/[slug]/page.tsx
+```
+
+### PHASE 3: Gemini (Parallel with Phase 1)
 
 ```
 1. T-06: Pusher Auth API
@@ -310,13 +403,13 @@ src/
 ## ✅ VERIFICATION CHECKLIST
 
 ### PHASE 0 - GEMINI (Navbar):
-- [ ] T-N1: HeroSearch fetches from `/api/locations/search`
-- [ ] T-N2: /perahu page uses `/api/listings/search`
-- [ ] T-N3: FilterPills renders from `/api/listings/filters`
-- [ ] T-N4: MobileSearchModal opens with animations
-- [ ] Desktop: Search bar, filter chips, scroll behavior work
-- [ ] Mobile: Bottom nav, search modal, quick filters work
-- [ ] HANDOFF_PROTOCOL.md updated
+- [x] T-N1: HeroSearch fetches from `/api/locations/search`
+- [x] T-N2: /perahu page uses `/api/listings/search`
+- [x] T-N3: FilterPills renders from `/api/listings/filters`
+- [x] T-N4: MobileSearchModal opens with animations
+- [x] Desktop: Search bar, filter chips, scroll behavior work
+- [x] Mobile: Bottom nav, search modal, quick filters work
+- [x] HANDOFF_PROTOCOL.md updated
 
 ### TRACK A - CLAUDE:
 - [ ] T-01: Schema has all new fields
@@ -403,24 +496,32 @@ If both agents touch the same file:
 
 | Phase | Task | Owner | Status | Priority |
 |-------|------|-------|--------|----------|
-| 0 | T-N1: HeroSearch API | Gemini | ⏳ | 🔴 HIGH |
-| 0 | T-N2: /perahu API | Gemini | ⏳ | 🔴 HIGH |
-| 0 | T-N3: FilterPills | Gemini | ⏳ | 🔴 HIGH |
-| 0 | T-N4: MobileSearchModal | Gemini | ⏳ | 🔴 HIGH |
+| 0 | T-N1: HeroSearch API | Gemini | ✅ | 🔴 HIGH |
+| 0 | T-N2: /perahu API | Gemini | ✅ | 🔴 HIGH |
+| 0 | T-N3: FilterPills | Gemini | ✅ | 🔴 HIGH |
+| 0 | T-N4: MobileSearchModal | Gemini | ✅ | 🔴 HIGH |
 | 1 | T-01: Schema Migration | Claude | ⬜ | 🔴 HIGH |
 | 1 | T-02: Pricing API | Claude | ⬜ | 🔴 HIGH |
 | 1 | T-03: Calendar API | Claude | ⬜ | 🔴 HIGH |
 | 1 | T-04: Blocked Dates | Claude | ⬜ | 🔴 HIGH |
 | 1 | T-05: Price Overrides | Claude | ⬜ | 🔴 HIGH |
-| 2 | T-06: Pusher Auth | Gemini | ⬜ | 🟡 MED |
-| 2 | T-07: useChatPusher | Gemini | ⬜ | 🟡 MED |
-| 2 | T-08: ChatWindow | Gemini | ⬜ | 🟡 MED |
-| 2 | T-09: Trans. Schema | Gemini | ⬜ | 🟢 LOW |
-| 2 | T-10: Transactions API | Gemini | ⬜ | 🟢 LOW |
+| 2 | T-L1: HorizontalBoatList | Gemini | ⬜ | 🔴 HIGH |
+| 2 | T-L2: BoatCardHorizontal | Gemini | ⬜ | 🔴 HIGH |
+| 2 | T-L3: FishingTechniqueChips | Gemini | ⬜ | 🔴 HIGH |
+| 2 | T-L4: AmenityFilterChips | Gemini | ⬜ | 🔴 HIGH |
+| 2 | T-L5: LocationCard | Gemini | ⬜ | 🟡 MED |
+| 2 | T-L6: NearbyLocations | Gemini | ⬜ | 🟡 MED |
+| 2 | T-L7: Breadcrumb | Gemini | ⬜ | 🟡 MED |
+| 2 | T-L8: Location Page | Gemini | ⬜ | 🟡 MED |
+| 3 | T-06: Pusher Auth | Gemini | ⬜ | 🟡 MED |
+| 3 | T-07: useChatPusher | Gemini | ⬜ | 🟡 MED |
+| 3 | T-08: ChatWindow | Gemini | ⬜ | 🟡 MED |
+| 3 | T-09: Trans. Schema | Gemini | ⬜ | 🟢 LOW |
+| 3 | T-10: Transactions API | Gemini | ⬜ | 🟢 LOW |
 
 ---
 
-**Document Version:** 2.0 (Updated with Navbar Tasks)
+**Document Version:** 3.0 (Updated with Location Pages + Jakarta Market)
 **Status:** READY FOR PARALLEL EXECUTION
-**Agents:** CLAUDE (Track A) + GEMINI (Phase 0 & Track B)
-**Priority:** PHASE 0 (Navbar) → PHASE 1 (Backend) → PHASE 2 (Chat)
+**Agents:** CLAUDE (Track A) + GEMINI (Phase 0, 2, 3)
+**Priority:** PHASE 0 (Navbar) → PHASE 1 (Backend) → PHASE 2 (Location) → PHASE 3 (Chat)
