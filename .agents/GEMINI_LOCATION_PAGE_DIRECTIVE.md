@@ -11,22 +11,39 @@
 
 ---
 
-## 🗺️ MARKET FOCUS: Jakarta, Banten, Lampung, Jawa Barat
+## 🗺️ MARKET FOCUS: Jakarta (Saltwater), Banten, Lampung, Jawa Barat
 
-**IMPORTANT:** GoFishi saat ini beroperasi di 4 provinsi ini saja!
+**IMPORTANT:** GoFishi is a **Saltwater Fishing Platform** focused on 4 provinces:
 
 | Province | Locations (Priority) |
 |----------|---------------------|
-| Jakarta | Ancol 🔴, Muara Baru 🟡, Sunda Kelapa |
-| Banten | Merak 🔴, Cilegon, Anyer |
-| Lampung | Bandarlampung 🟡, Krui, Pahawang |
-| Jawa Barat | Karimunjawa 🔴, Pangandaran 🟡, Cirebon |
+| Jakarta 🌊 | Ancol Marina 🔴, Kepulauan Seribu 🔴, Sunda Kelapa 🟡 |
+| Banten 🌊 | Merak 🔴, Cilegon, Anyer |
+| Lampung 🌊 | Bandarlampung 🟡, Krui, Pahawang |
+| Jawa Barat 🌊 | Karimunjawa 🔴, Pangandaran 🟡, Cirebon |
+
+### Jakarta Research - Saltwater Fishing Spots
+
+```
+JAKARTA UTARA:
+├── Ancol Marina (Taman Impian Jaya)
+│   ├── Hero Spot: Pulau Bidadari
+│   └── Target Fish: Kakap, Kembung, Baronang, Toman
+│
+├── Kepulauan Seribu (Thousand Islands)
+│   ├── Spots: Pramuka, Kelapa, Harapan, Pari
+│   └── Target Fish: GT, Tuna, Cakalang, Kerapu
+│
+└── Sunda Kelapa
+    ├── Spots: Muara Angke, Muara Ciliwung
+    └── Target Fish: Kakap, Kembung, Baronang
+```
 
 **MVP Locations (Build First):**
-1. `/lokasi/ancol` - Primary (highest traffic!)
-2. `/lokasi/muarabaru` - Jakarta secondary
-3. `/lokasi/merak` - Banten primary
-4. `/lokasi/karimunjawa` - Premium destination
+1. `/lokasi/ancol` - Ancol Marina (highest traffic!)
+2. `/lokasi/kepulauan-seribu` - Thousand Islands (premium)
+3. `/lokasi/sunda-kelapa` - Sunda Kelapa (urban)
+4. `/lokasi/merak` - Merak, Banten
 
 ---
 

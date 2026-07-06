@@ -10,20 +10,42 @@
 
 ## 🗺️ CURRENT MARKET LOCATIONS
 
-GoFishi's operational market is currently focused on 4 provinces:
+GoFishi's operational market is focused on **Saltwater Fishing** in 4 provinces:
 
-| Province | Locations |
-|----------|-----------|
-| Jakarta | Ancol, Muara Baru, Sunda Kelapa |
-| Banten | Merak, Cilegon, Anyer |
-| Lampung | Bandarlampung, Krui, Pahawang |
-| Jawa Barat | Karimunjawa, Pangandaran, Cirebon |
+| Province | Locations | Water Type |
+|----------|-----------|-----------|
+| Jakarta | Ancol Marina, Kepulauan Seribu, Sunda Kelapa | 🌊 Saltwater |
+| Banten | Merak, Cilegon, Anyer | 🌊 Saltwater |
+| Lampung | Bandarlampung, Krui, Pahawang | 🌊 Saltwater |
+| Jawa Barat | Karimunjawa, Pangandaran, Cirebon | 🌊 Saltwater |
+
+### Jakarta Research: Saltwater Fishing Spots
+
+```
+JAKARTA UTARA
+│
+├── Ancol Marina (Taman Impian Jaya)
+│   ├── Hero Spot: Pulau Bidadari
+│   ├── Access: Via Toll Road (25 km from CBD)
+│   ├── Target Fish: Kakap, Kembung, Baronang, Toman
+│   └── Best For: Popping, Jigging
+│
+├── Kepulauan Seribu (Thousand Islands)
+│   ├── Best Spots: Pramuka, Kelapa, Harapan, Pari
+│   ├── Access: Speedboat from Marina Ancol (1-2 hours)
+│   ├── Target Fish: GT, Tuna, Cakalang, Kerapu
+│   └── Best For: Deep Jigging, Trolling
+│
+└── Sunda Kelapa
+    ├── Best Spots: Muara Angke, Muara Ciliwung
+    ├── Target Fish: Kakap, Kembung, Baronang
+    └── Best For: Light Jigging, Casting
+```
 
 **Primary Focus (MVP):**
-- `/lokasi/ancol` - Primary (highest traffic)
-- `/lokasi/muarabaru` - Jakarta secondary
-- `/lokasi/merak` - Banten primary
-- `/lokasi/karimunjawa` - Jawa Barat primary
+- `/lokasi/ancol` - Ancol Marina (highest traffic)
+- `/lokasi/kepulauan-seribu` - Thousand Islands (premium)
+- `/lokasi/sunda-kelapa` - Sunda Kelapa (urban)
 
 ---
 
@@ -34,11 +56,17 @@ GoFishi's operational market is currently focused on 4 provinces:
 Following Airbnb's destination page pattern, GoFishi will have:
 
 ```
-/lokasi/ancol              → Ancol, Jakarta - Fishing Spots
-/lokasi/muarabaru         → Muara Baru, Jakarta - Fishing Spots
-/lokasi/merak             → Merak, Banten - Fishing Spots
-/lokasi/karimunjawa       → Karimunjawa, Jawa Barat - Fishing Spots
-/lokasi/bandarlampung     → Bandarlampung, Lampung - Fishing Spots
+JAWA BARAT (Closest to Jakarta):
+/lokasi/ancol              → Ancol Marina, Jakarta Utara - Fishing Spots
+/lokasi/kepulauan-seribu   → Thousand Islands, Jakarta - Premium Fishing
+/lokasi/sunda-kelapa       → Sunda Kelapa, Jakarta Utara - Urban Fishing
+
+BANTEN:
+/lokasi/merak             → Merak, Banten - Selat Sunda Fishing
+
+JAWA BARAT:
+/lokasi/karimunjawa       → Karimunjawa, Jawa Tengah - Island Fishing
+/lokasi/pangandaran       → Pangandaran, Jawa Barat - Selatan Fishing
 ```
 
 ### Page Types Mapping

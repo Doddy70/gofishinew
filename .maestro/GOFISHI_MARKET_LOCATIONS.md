@@ -1,398 +1,231 @@
-# 🗺️ GOFISHI MARKET LOCATIONS
-## Current Operational Areas
+# 🗺️ GOFISHI MARKET LOCATIONS - UPDATED
+## Jakarta Market Focus: Saltwater Fishing
 
 **Date:** 2026-07-06
-**Status:** ACTIVE MARKET
-**Coverage:** 4 Provinces in Indonesia
+**Last Updated:** 2026-07-06
+**Market Type:** Saltwater Fishing
 
 ---
 
-## 📍 CURRENT LOCATIONS (Active Market)
+## 📍 UPDATED JAKARTA LOCATIONS
 
-### Jakarta
-```
-┌─────────────────────────────────────────────────────────────┐
-│  Jakarta                                                    │
-│  ├── Muara Baru (Pelabuhan Nusantara)                      │
-│  ├── Kamal Muara (Teluk Jakarta)                          │
-│  ├── Ancol (Taman Impian Jaya)                            │
-│  └── Sunda Kelapa (Pelabuhan Kali Baru)                   │
-└─────────────────────────────────────────────────────────────┘
-```
+Based on research, Jakarta's saltwater fishing market focuses on these key areas:
 
-### Banten
-```
-┌─────────────────────────────────────────────────────────────┐
-│  Banten                                                    │
-│  ├── Merak (Pelabuhan Merak)                             │
-│  ├── Cilegon (Industri & Laut)                           │
-│  ├── Tanjung Lesung                                       │
-│  └── Anyer                                               │
-└─────────────────────────────────────────────────────────────┘
-```
-
-### Lampung
-```
-┌─────────────────────────────────────────────────────────────┐
-│  Lampung                                                   │
-│  ├── Bandarlampung (Pelabuhan)                           │
-│  ├── Kalianda                                             │
-│  ├── Krui                                                │
-│  └── Pulau Pahawang                                      │
-└─────────────────────────────────────────────────────────────┘
-```
-
-### Jawa Barat (West Java)
-```
-┌─────────────────────────────────────────────────────────────┐
-│  Jawa Barat                                               │
-│  ├── Cirebon (Pantai Utara)                              │
-│  ├── Karimunjawa                                         │
-│  ├── Pangandaran                                         │
-│  ├── Ujung Genteng                                       │
-│  └── Ciletuh                                             │
-└─────────────────────────────────────────────────────────────┘
-```
-
----
-
-## 📊 LOCATION HIERARCHY
+### Jakarta Primary Fishing Areas
 
 ```
-Indonesia
-└── Jawa
-    ├── DKI Jakarta
-    │   └── /lokasi/jakarta
-    │       └── /lokasi/ancol
-    │       └── /lokasi/muarabaru
-    │
-    ├── Banten
-    │   └── /lokasi/banten
-    │       └── /lokasi/merak
-    │       └── /lokasi/cilegon
-    │
-    ├── Lampung
-    │   └── /lokasi/lampung
-    │       └── /lokasi/bandarlampung
-    │       └── /lokasi/krui
-    │
-    └── Jawa Barat
-        └── /lokasi/jawabarat
-            └── /lokasi/karimunjawa
-            └── /lokasi/pangandaran
+┌─────────────────────────────────────────────────────────────────────────┐
+│                    JAKARTA UTARA - Fishing District                     │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                         │
+│  🏭 ANCOL MARINA (Taman Impian Jaya)                                 │
+│  ├── Location: Pademangan, Jakarta Utara                              │
+│  ├── Access: Via Toll Road (25 km from Sudirman)                    │
+│  ├── Facilities: Marina, Fuel Station, Restaurants                    │
+│  ├── Best Spots: Pulau Bidadari, Pulau Pramuka, Sundaland            │
+│  └── Target Fish: Kakap, Kembung, Baronang, Toman, Gabus            │
+│                                                                         │
+│  🌊 KEPULAUAN SERIBU (Thousand Islands)                               │
+│  ├── Location: 110 islands north of Jakarta                           │
+│  ├── Access: Speedboat from Marina Ancol (1-2 hours)                │
+│  ├── Best Spots:                                                        │
+│  │   ├── Pulau Pramuka - Pulasi Babi, Pulau Tikus                   │
+│  │   ├── Pulau Kelapa - Spot Dalam, Spot Barat                      │
+│  │   ├── Pulau Harapan - Spot Utara, Spot Selatan                      │
+│  │   ├── Pulau Pari - Spot Karang Kasih                               │
+│  │   └── Pulau Untung Jawa - Banjir, Ciliungung                       │
+│  ├── Target Fish: Kerapu, Kakap, Baracuda, GT (Giant Trevally),    │
+│  │                 Tuna, Cakalang, Salmon (Korum)                    │
+│  └── Season: Oktober - April (muson barat), May - September (muson timur) │
+│                                                                         │
+│  ⚓ PELABUHAN SUNDA KELAPA                                            │
+│  ├── Location: Penjaringan, Jakarta Utara                            │
+│  ├── Access: Via Tanjung Priok (30 min from CBD)                   │
+│  ├── Best Spots:                                                        │
+│  │   ├── Muara Angke - Tambaklorok                                    │
+│  │   ├── Muara Ciliwung - Banjir Barat, Banjir Timur                 │
+│  │   ├── Dermaga BPL - Dalam/Luar                                    │
+│  │   └── Pulau Kotok - Spot Dalam                                     │
+│  ├── Target Fish: Kakap, Kembung, Baronang, Udang Lobster            │
+│  └── Season: November - Maret                                          │
+│                                                                         │
+└─────────────────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## 🎯 FOCUS LOCATIONS FOR MVP
+## 🎣 SALTWATER FISHING MARKET ANALYSIS
 
-### Tier 1: Primary Markets (Launch First)
-| Location | Priority | Boats Target |
-|----------|----------|--------------|
-| Ancol, Jakarta | 🔴 HIGH | 10+ boats |
-| Muara Baru, Jakarta | 🔴 HIGH | 5+ boats |
-| Merak, Cilegon | 🔴 HIGH | 5+ boats |
+### Target Fish Species (Jakarta Waters)
 
-### Tier 2: Secondary Markets (Phase 2)
-| Location | Priority | Boats Target |
-|----------|----------|--------------|
-| Karimunjawa, Jawa Barat | 🟡 MED | 5+ boats |
-| Pangandaran, Jawa Barat | 🟡 MED | 3+ boats |
-| Lampung (Bandarlampung) | 🟡 MED | 3+ boats |
-
-### Tier 3: Future Markets (Phase 3)
-| Location | Priority |
-|----------|----------|
-| Anyer, Banten | 🟢 LOW |
-| Krui, Lampung | 🟢 LOW |
-| Ujung Genteng, Jawa Barat | 🟢 LOW |
+| Fish | Local Name | Season | Technique | Price Range |
+|------|-----------|--------|-----------|-------------|
+| Giant Trevally | GT / Baronang | Year-round | Popping, Jigging | Rp 150-500k/kg |
+| Kerapu (Grouper) | Kerapu | Year-round | Jigging, Live Bait | Rp 200-600k/kg |
+| Tuna | Tuna Madidihang | Mei-Okt | Trolling, Popping | Rp 150-400k/kg |
+| Cakalang | Cakalang | Year-round | Trolling, Casting | Rp 80-200k/kg |
+| Kakap (Snaper) | Kakap Merah | Year-round | Jigging, Live Bait | Rp 100-300k/kg |
+| Baracuda | Baracuda | Year-round | Casting, Trolling | Rp 60-150k/kg |
+| Salmon (Korum) | Salmon / Kurumo | Des-Maret | Jigging | Rp 200-400k/kg |
+| Kembung | Kembung/Bannis | Year-round | Casting, Jigging | Rp 40-100k/kg |
+| Toman | Snakehead | Year-round | Casting | Rp 80-200k/kg |
+| Gabus | Snakehead | Year-round | Casting | Rp 60-150k/kg |
 
 ---
 
-## 🏷️ LOCATION SLUGS (for URLs)
+## 📊 UPDATED MARKET LOCATIONS
+
+### Jakarta Province
 
 ```
-/lokasi/ancol              → Ancol, Jakarta
-/lokasi/muarabaru         → Muara Baru, Jakarta
-/lokasi/merak             → Merak, Banten
-/lokasi/cilegon           → Cilegon, Banten
-/lokasi/bandarlampung     → Bandarlampung, Lampung
-/lokasi/krui              → Krui, Lampung
-/lokasi/karimunjawa       → Karimunjawa, Jawa Barat
-/lokasi/pangandaran       → Pangandaran, Jawa Barat
+JAKARTA
+│
+├── Ancol Marina
+│   ├── Hero Spot: Pulau Bidadari
+│   ├── Best For: Popping, Jigging
+│   └── Target: GT, Kerapu, Toman
+│
+├── Kepulauan Seribu
+│   ├── Hero Spots: Pramuka, Kelapa, Harapan, Pari
+│   ├── Best For: Deep Jigging, Trolling
+│   └── Target: Tuna, Cakalang, Kerapu, GT
+│
+└── Sunda Kelapa
+    ├── Hero Spots: Muara Angke, Muara Ciliwung
+    ├── Best For: Light Jigging, Casting
+    └── Target: Kakap, Kembung, Baronang
 ```
 
----
+### Priority URL Slugs
 
-## 🐟 FISHING SPOTS PER LOCATION
-
-### Ancol, Jakarta
 ```
-Fishing Spots:
-- Spot A: Baringin
-- Spot B: Pulau Bidadari
-- Spot C: Pulau Pramuka
-- Spot D: Sundaland
-
-Target Fish: Kakap, Kembung, Toman, Gabus
-Best Season: Oktober - April
-```
-
-### Muara Baru, Jakarta
-```
-Fishing Spots:
-- Spot A: Muara Sungai Ciliwung
-- Spot B: Muara Sungai Angke
-- Spot C: Pulau Kapuk
-
-Target Fish: Kakap, Baronang, Kerapu
-Best Season: November - Maret
-```
-
-### Merak, Banten
-```
-Fishing Spots:
-- Spot A: Selat Sunda
-- Spot B: Pulau Manuk
-- Spot C: Gunung Anak Krakatau (distant)
-
-Target Fish: Tuna, Cakalang, Kembung
-Best Season: April - Oktober
-```
-
-### Karimunjawa, Jawa Barat
-```
-Fishing Spots:
-- Spot A: Pulau Karimunjawa
-- Spot B: Pulau Menjangan
-- Spot C: Pulau Cemara
-- Spot D: Spot Dalam
-
-Target Fish: Kerapu, Kakap, Baracuda, GT
-Best Season: Maret - November
+/lokasi/ancol              → Ancol Marina, Jakarta
+/lokasi/kepulauan-seribu   → Thousand Islands
+/lokasi/sunda-kelapa       → Sunda Kelapa Port
+/lokasi/pramuka           → Pulau Pramuka (Kepulauan Seribu)
+/lokasi/pulau-kelapa      → Pulau Kelapa (Kepulauan Seribu)
 ```
 
 ---
 
-## 📱 LOCATION-BASED FEATURES
+## 🏠 LOCATION PAGE DESIGN (Jakarta)
 
-### 1. Location Selector (Dropdown)
-```
-Pilih Lokasi Memancing:
-────────────────────────
-📍 Jakarta
-   ├── Ancol
-   ├── Muara Baru
-   └── Sunda Kelapa
-
-📍 Banten
-   ├── Merak
-   ├── Cilegon
-   └── Anyer
-
-📍 Lampung
-   ├── Bandarlampung
-   └── Krui
-
-📍 Jawa Barat
-   ├── Karimunjawa
-   ├── Pangandaran
-   └── Ujung Genteng
-```
-
-### 2. Home Page Location Cards
-```
-┌─────────────┐ ┌─────────────┐ ┌─────────────┐ ┌─────────────┐
-│             │ │             │ │             │ │             │
-│  🏙️ Jakarta│ │  🏖️ Banten │ │  🌴Lampung │ │ 🏝️ JawaBarat│
-│             │ │             │ │             │ │             │
-│  12 kapal   │ │  5 kapal    │ │  3 kapal    │ │  8 kapal    │
-
-
-│             │ │             │ │             │ │             │
-└─────────────┘ └─────────────┘ └─────────────┘ └─────────────┘
-```
-
-### 3. Nearby Locations (per current location)
-```
-┌─────────────────────────────────────────────────────────────┐
-│  Spot Terdekat dari Ancol                                   │
-├─────────────────────────────────────────────────────────────┤
-│  ┌─────────┐ ┌─────────┐ ┌─────────┐ ┌─────────┐         │
-│  │ Muara   │ │ Sunda   │ │Merak   │ │Karimu- │         │
-│  │ Baru    │ │ Kelapa  │ │ Banten │ │ njawa   │         │
-│  │ 15 km   │ │ 20 km   │ │ 80 km   │ │ 200 km  │         │
-│  └─────────┘ └─────────┘ └─────────┘ └─────────┘         │
-└─────────────────────────────────────────────────────────────┘
-```
-
----
-
-## 🔧 DATABASE STRUCTURE (Suggested)
-
-```typescript
-// Location Model
-interface Location {
-  id: string;           // "loc-ancol"
-  name: string;         // "Ancol"
-  slug: string;         // "ancol"
-  region: string;       // "Jakarta"
-  province: string;     // "DKI Jakarta"
-  
-  // Coordinates
-  latitude: number;
-  longitude: number;
-  
-  // Display
-  image: string;        // Hero image URL
-  description: string; // "Sono spot memancing..."
-  
-  // Stats
-  boatCount: number;
-  avgPrice: number;
-  rating: number;
-  
-  // Fishing Info
-  targetFish: string[];
-  bestSeason: string;
-  
-  // Metadata
-  isActive: boolean;
-  sortOrder: number;
-}
-```
-
----
-
-## 📁 API REQUIREMENTS
-
-### GET /api/locations
-```typescript
-// Response
-{
-  data: Location[];
-  byProvince: {
-    "DKI Jakarta": Location[];
-    "Banten": Location[];
-    "Lampung": Location[];
-    "Jawa Barat": Location[];
-  };
-}
-```
-
-### GET /api/locations/[slug]
-```typescript
-// Response
-{
-  location: Location;
-  nearbyLocations: Location[];  // Sorted by distance
-  popularSpots: string[];
-  featuredBoats: Listing[];
-  allBoats: Listing[];
-}
-```
-
----
-
-## 🎯 MVP SCOPE FOR LOCATION PAGES
-
-### Phase 1 (Launch): 4 Main Locations
-1. `/lokasi/ancol` - Primary (highest traffic)
-2. `/lokasi/muarabaru` - Jakarta secondary
-3. `/lokasi/merak` - Banten primary
-4. `/lokasi/karimunjawa` - Jawa Barat primary
-
-### Phase 2: Expand
-5. `/lokasi/bandarlampung` - Lampung
-6. `/lokasi/pangandaran` - Jawa Barat secondary
-
-### Phase 3: Complete
-- All remaining locations
-- Nearby fishing spots sub-pages
-
----
-
-## 📊 STATISTICS (Target)
-
-| Location | Target Boats | Target Bookings/Month |
-|----------|-------------|----------------------|
-| Ancol | 10 | 50 |
-| Muara Baru | 5 | 20 |
-| Merak | 5 | 15 |
-| Karimunjawa | 8 | 40 |
-| Others | 3-5 each | 10 each |
-
----
-
-## 🎨 LOCATION PAGE DESIGN
-
-### Hero Section
+### Hero Section - Ancol
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │                                                             │
-│              🏙️ ANCOL, JAKARTA                             │
+│              🏭 ANCOL MARINA, JAKARTA UTARA               │
 │                                                             │
-│     Surga Memancing di Pintu Gerbang Ibukota               │
+│     Spot Populer Memancing Laut di Jakarta                 │
 │                                                             │
-│     📍 12 kapal    ⭐ 4.8    💰 Rp 2.5jt - 5jt           │
+│     📍 8 kapal   ⭐ 4.8    💰 Rp 2.5jt - 8jt             │
 │                                                             │
 │  [📅 Check-in] [📅 Check-out] [👤 Tamu] [🔍 Cari]       │
 │                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
 
-### Location Card (Home Page)
+### Hero Section - Kepulauan Seribu
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│  🏙️ Jakarta                                                │
-│  12 kapal tersedia                                         │
 │                                                             │
-│  ┌─────────┐ ┌─────────┐ ┌─────────┐                        │
-│  │ Ancol   │ │ Muara   │ │ Sunda   │                        │
-│  │         │ │ Baru    │ │ Kelapa  │                        │
-│  │ 8 kapal │ │ 3 kapal │ │ 1 kapal │                        │
-│  └─────────┘ └─────────┘ └─────────┘                        │
+│          🌊 KEPULAUAN SERIBU, JAKARTA UTARA              │
+│                                                             │
+│     Trip Memancing ke 110 Pulau di Utara Jakarta           │
+│                                                             │
+│     📍 5 kapal   ⭐ 4.9    💰 Rp 5jt - 15jt              │
+│                                                             │
+│  [📅 Check-in] [📅 Check-out] [👤 Tamu] [🔍 Cari]       │
+│                                                             │
 └─────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## 📱 LOCATION SELECTOR DESIGN
+
+```
+Pilih Spot Memancing:
+────────────────────────
+📍 Jakarta
+   ├── Ancol Marina
+   │   └── Pulau Bidadari, Sundaland
+   ├── Kepulauan Seribu
+   │   ├── Pulau Pramuka
+   │   ├── Pulau Kelapa
+   │   ├── Pulau Harapan
+   │   └── Pulau Pari
+   └── Sunda Kelapa
+       └── Muara Angke, Muara Ciliwung
+```
+
+---
+
+## 🔧 DATA STRUCTURE
+
+```typescript
+interface Location {
+  id: string;              // "loc-ancol"
+  name: string;            // "Ancol Marina"
+  slug: string;            // "ancol"
+  region: string;           // "Jakarta Utara"
+  province: string;         // "DKI Jakarta"
+  waterType: "saltwater" | "freshwater" | "mixed";
+  
+  // Spot-specific
+  heroSpot?: string;       // "Pulau Bidadari"
+  nearbyIslands?: string[]; // ["Kepulauan Seribu", "Sunda Kelapa"]
+  
+  // Fishing Info
+  targetFish: string[];
+  bestTechniques: string[];
+  bestSeason: {
+    start: string;          // "Oktober"
+    end: string;           // "April"
+  };
+  
+  // Access
+  accessFrom: string;       // "Marina Ancol"
+  travelTime: string;       // "30 menit"
+  
+  // Stats
+  boatCount: number;
+  avgPrice: number;
+  rating: number;
+}
 ```
 
 ---
 
 ## ✅ IMPLEMENTATION CHECKLIST
 
-### Location Data
-- [ ] Create location seed data (4 provinces, 8+ locations)
-- [ ] Add `region` and `province` to Listing schema
-- [ ] Update listings with location data
+### Phase 1: Jakarta (MVP)
+- [ ] `/lokasi/ancol` - Ancol Marina page
+- [ ] `/lokasi/kepulauan-seribu` - Thousand Islands page
+- [ ] `/lokasi/sunda-kelapa` - Sunda Kelapa page
 
-### Components
-- [ ] LocationCard.tsx
-- [ ] LocationGrid.tsx
-- [ ] LocationSelector.tsx
-- [ ] NearbyLocations.tsx
+### Phase 2: Sub-locations
+- [ ] `/lokasi/pramuka` - Pulau Pramuka
+- [ ] `/lokasi/pulau-kelapa` - Pulau Kelapa
+- [ ] `/lokasi/muara-angke` - Muara Angke
 
-### Pages
-- [ ] `/lokasi/ancol` - Landing page
-- [ ] `/lokasi/muarabaru` - Landing page
-- [ ] `/lokasi/merak` - Landing page
-- [ ] `/lokasi/karimunjawa` - Landing page
-- [ ] `/lokasi/[slug]` - Dynamic template
-
-### Features
-- [ ] Location-based filtering on homepage
-- [ ] Nearby locations per current location
-- [ ] Distance calculation (optional)
+### Data Requirements
+- [ ] Update Location seed data
+- [ ] Add waterType field
+- [ ] Add targetFish to listings
+- [ ] Add bestTechniques to listings
+- [ ] Add heroSpot to locations
 
 ---
 
-## 📝 NOTES
+## 🎯 NOTES FOR GEMINI
 
-1. **Jakarta** is the primary market - focus on Ancol and Muara Baru first
-2. **Merak** benefits from Jakarta proximity (80km)
-3. **Karimunjawa** is a premium destination - target weekend anglers
-4. **Lampung** is underserved - opportunity for first-mover
+1. **Jakarta = Saltwater Fishing** - No freshwater spots in Jakarta
+2. **Kepulauan Seribu** is premium - target GT, Tuna, Kerapu
+3. **Ancol** is entry-level - target Kakap, Kembung, Baronang
+4. **Sunda Kelapa** is urban - target city anglers
 
 ---
 
-**Document Version:** 1.0
+**Document Version:** 2.0 (Updated with Jakarta saltwater research)
 **Status:** READY FOR IMPLEMENTATION
-**Market Focus:** Jakarta, Banten, Lampung, Jawa Barat
