@@ -43,10 +43,8 @@ export class ListingRepository {
         ...(fishingTech && { fishingTechs: { hasSome: fishingTech.split(',') } }),
         ...(boatType && { boatType: { in: boatType.split(',') } }),
         ...(amenities && {
-          amenities: {
-            some: {
-              name: { in: amenities.split(',') }
-            }
+          facilities: {
+            hasSome: amenities.split(',')
           }
         }),
         ...(minPrice || maxPrice
