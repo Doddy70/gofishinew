@@ -26,6 +26,8 @@
     "midtrans-client": "^1.4.3",
     "next": "16.1.4",
     "pg": "^8.17.2",
+    "pusher": "^5.3.4",
+    "pusher-js": "^8.5.0",
     "react": "19.2.3",
     "react-date-range": "^2.0.1",
     "react-dom": "19.2.3",
