@@ -26,7 +26,7 @@ export default function DashboardSidebar({ role }: SidebarProps) {
       active: pathname === "/admin/listings" || pathname === "/properties",
     },
     {
-      label: "Reservasi Saya",
+      label: "Pesanan Masuk",
       icon: LuCalendar,
       href: "/dashboard/reservations",
       active: pathname === "/dashboard/reservations",

@@ -8,6 +8,9 @@ export type ListingFilterParams = {
   startDate?: string;
   endDate?: string;
   guests?: number;
+  fishingTech?: string;
+  boatType?: string;
+  amenities?: string;
   skip?: number;
   take?: number;
 };
@@ -22,6 +25,9 @@ export class ListingRepository {
       startDate,
       endDate,
       guests,
+      fishingTech,
+      boatType,
+      amenities,
       skip,
       take,
     } = params;
@@ -34,6 +40,15 @@ export class ListingRepository {
         ...(category && { category }),
         ...(locationValue && { locationValue }),
         ...(guests && { passengerCapacity: { gte: Number(guests) } }),
+        ...(fishingTech && { fishingTechs: { hasSome: fishingTech.split(',') } }),
+        ...(boatType && { boatType: { in: boatType.split(',') } }),
+        ...(amenities && {
+          amenities: {
+            some: {
+              name: { in: amenities.split(',') }
+            }
+          }
+        }),
         ...(minPrice || maxPrice
           ? {
               price: {

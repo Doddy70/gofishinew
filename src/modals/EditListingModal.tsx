@@ -27,6 +27,14 @@ const STEPS = {
   PRICE: 5,
 };
 
+const MapComponent = dynamic(
+  () => import("../components/general/map/MapComponent"),
+  {
+    ssr: false,
+    loading: () => <p className="text-center py-6">Memuat peta...</p>,
+  },
+);
+
 // @ts-nocheck
 export default function EditListingModal() {
   const { isOpen, close, listing } = useEditListingModal();
@@ -72,13 +80,6 @@ export default function EditListingModal() {
     }
   }, [listing, isOpen, getByValue]);
 
-  const MapComponent = dynamic(
-    () => import("../components/general/map/MapComponent"),
-    {
-      ssr: false,
-      loading: () => <p className="text-center py-6">Memuat peta...</p>,
-    },
-  );
 
   const stepTitle = () => {
     switch (step) {

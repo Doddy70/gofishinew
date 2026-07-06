@@ -198,19 +198,6 @@ export default function ListingDetailClient({ listing }: ListingDetailClientProp
             {listing.engine2 && <SpecItem icon={<LuCpu size={24} />} label="Mesin Cadangan" value={listing.engine2} />}
           </div>
 
-          {/* Meeting Point */}
-          {listing.meetingPoint && (
-             <div className="pb-8 border-b border-hairline">
-               <div className="flex items-start gap-4">
-                 <LuAnchor className="text-ink shrink-0" size={24} />
-                 <div>
-                   <h3 className="font-semibold text-[16px] text-ink">Titik Kumpul (Meeting Point)</h3>
-                   <p className="text-[15px] text-muted mt-1">{listing.meetingPoint}</p>
-                 </div>
-               </div>
-             </div>
-          )}
-
           {/* Description */}
           <div className="pb-8 border-b border-hairline space-y-4">
             <h2 className="text-[22px] font-semibold">Tentang Perahu</h2>
@@ -220,7 +207,7 @@ export default function ListingDetailClient({ listing }: ListingDetailClientProp
           </div>
 
           {/* Fishing Specialties */}
-          {((listing.fishingTechs && listing.fishingTechs.length > 0) || (listing.targetFish && listing.targetFish.length > 0)) && (
+          {(listing.fishingTechs && listing.fishingTechs.length > 0) && (
             <div className="pb-8 border-b border-hairline space-y-8">
               {listing.fishingTechs && listing.fishingTechs.length > 0 && (
                 <div className="space-y-4">
@@ -229,18 +216,6 @@ export default function ListingDetailClient({ listing }: ListingDetailClientProp
                     {listing.fishingTechs.map((tech: string) => (
                       <span key={tech} className="bg-surface-soft border border-hairline-soft text-ink px-4 py-2 rounded-full text-sm font-medium">
                         {tech}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              )}
-              {listing.targetFish && listing.targetFish.length > 0 && (
-                <div className="space-y-4">
-                  <h3 className="text-[18px] font-semibold">Target Ikan</h3>
-                  <div className="flex flex-wrap gap-2">
-                    {listing.targetFish.map((fish: string) => (
-                      <span key={fish} className="bg-primary/10 border border-primary/20 text-primary px-4 py-2 rounded-full text-sm font-medium">
-                        {fish}
                       </span>
                     ))}
                   </div>
@@ -285,7 +260,7 @@ export default function ListingDetailClient({ listing }: ListingDetailClientProp
               pricePerNight={listing.price}
               listingId={listing.id}
               hostId={listing.userId}
-              reservations={listing.reservations || []}
+              tripMasters={listing.tripMasters || []}
               weekendPrice={listing.weekendPrice}
               holidayPrice={listing.holidayPrice}
               captainPhone={listing.user?.phoneNumber || listing.captainPhone}

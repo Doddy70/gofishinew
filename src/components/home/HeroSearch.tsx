@@ -2,17 +2,14 @@
 
 import { useState, useRef, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { smartSearch } from "@/server-actions/smartSearch";
 import {
   LuSearch,
   LuAnchor,
-  LuShip,
-  LuTreePalm,
-  LuWaves,
   LuMinus,
   LuPlus,
-  LuSparkles
+  LuMenu
 } from "react-icons/lu";
+import MobileSearchModal from "@/components/modals/MobileSearchModal";
 
 import { DateRange, type Range } from "react-date-range";
 import { addDays, format } from "date-fns";
@@ -21,13 +18,7 @@ import { id } from "date-fns/locale";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 
-const locations = [
-  { city: 'Marina Ancol', state: 'Jakarta Utara', country: 'Indonesia', type: 'marina' },
-  { city: 'Pantai Mutiara', state: 'Penjaringan', country: 'Indonesia', type: 'marina' },
-  { city: 'Muara Angke', state: 'Jakarta Utara', country: 'Indonesia', type: 'port' },
-  { city: 'Kepulauan Seribu', state: 'DKI Jakarta', country: 'Indonesia', type: 'island' },
-  { city: 'Tanjung Pasir', state: 'Tangerang', country: 'Indonesia', type: 'beach' },
-];
+// Locations will be fetched dynamically
 
 export default function HeroSearch({ isScrolled, isExpanded, onExpand }: { isScrolled?: boolean; isExpanded?: boolean; onExpand?: () => void }) {
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -36,9 +27,12 @@ export default function HeroSearch({ isScrolled, isExpanded, onExpand }: { isScr
 
   const searchParams = useSearchParams();
 
-  const [searchMode, setSearchMode] = useState<'classic' | 'ai'>('classic');
+  const [isMobileModalOpen, setIsMobileModalOpen] = useState(false);
   const [activeField, setActiveField] = useState<'location' | 'dates' | 'guests' | null>(null);
   const [location, setLocation] = useState(searchParams.get('locationValue') || '');
+  const [locationQuery, setLocationQuery] = useState(searchParams.get('locationValue') || '');
+  const [locations, setLocations] = useState<any[]>([]);
+  const [isLoadingLocations, setIsLoadingLocations] = useState(false);
   
   const initialGuests = parseInt(searchParams.get('guests') || '1');
   const [adults, setAdults] = useState(initialGuests);
@@ -65,12 +59,21 @@ export default function HeroSearch({ isScrolled, isExpanded, onExpand }: { isScr
   const guestText = searchParams.get('guests') || totalGuests > 0 ? `${totalGuests} tamu` : 'Tambahkan tamu';
 
   const onSearch = () => {
-    const query = new URLSearchParams({
-      locationValue: location,
-      startDate: startDate?.toISOString() || '',
-      endDate: endDate?.toISOString() || '',
-      guests: totalGuests.toString()
-    });
+    const query = new URLSearchParams(searchParams.toString());
+    
+    const finalLocation = location || locationQuery;
+    if (finalLocation) query.set("locationValue", finalLocation);
+    else query.delete("locationValue");
+    
+    if (startDate) query.set("startDate", startDate.toISOString());
+    else query.delete("startDate");
+    
+    if (endDate) query.set("endDate", endDate.toISOString());
+    else query.delete("endDate");
+    
+    if (totalGuests > 0) query.set("guests", totalGuests.toString());
+    else query.delete("guests");
+
     router.push(`/perahu?${query.toString()}`);
   };
 
@@ -84,6 +87,33 @@ export default function HeroSearch({ isScrolled, isExpanded, onExpand }: { isScr
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  useEffect(() => {
+    const fetchLocations = async () => {
+      if (!locationQuery || locationQuery.trim().length < 2) {
+        setLocations([]);
+        return;
+      }
+      setIsLoadingLocations(true);
+      try {
+        const res = await fetch(`/api/locations/search?q=${encodeURIComponent(locationQuery)}`);
+        if (res.ok) {
+          const data = await res.json();
+          setLocations(data);
+        }
+      } catch (error) {
+        console.error("Error fetching locations:", error);
+      } finally {
+        setIsLoadingLocations(false);
+      }
+    };
+
+    const timer = setTimeout(() => {
+      fetchLocations();
+    }, 300); // 300ms debounce
+
+    return () => clearTimeout(timer);
+  }, [locationQuery]);
+
   return (
     <div ref={containerRef} className="w-full max-w-[850px] mx-auto relative z-30">
 
@@ -93,27 +123,39 @@ export default function HeroSearch({ isScrolled, isExpanded, onExpand }: { isScr
           isScrolled && !isExpanded ? 'md:opacity-100 md:translate-y-0 md:scale-100 md:pointer-events-auto' : 'md:opacity-0 md:translate-y-[20px] md:scale-110 md:pointer-events-none'
         }`}
       >
-        <div
-          onClick={() => {
-            if (onExpand) onExpand();
-          }}
-          className="flex items-center gap-2 px-4 py-2 bg-canvas border border-hairline rounded-full shadow-[0_1px_2px_rgba(0,0,0,0.08),0_4px_12px_rgba(0,0,0,0.05)] hover:shadow-[0_2px_4px_rgba(0,0,0,0.18)] cursor-pointer transition-shadow"
-        >
-          <div className="flex-1 min-w-0 md:hidden">
-            <span className="text-sm font-semibold text-ink px-2 block truncate">{location || 'Cari destinasi'}</span>
-            <div className="flex items-center text-xs text-muted px-2 truncate mt-0.5">
-              <span>{startDate ? format(startDate, 'd MMM') : 'Kapan'}</span>
-              <span className="mx-1">•</span>
-              <span>{guestText}</span>
+        <div className="flex items-center gap-3">
+          {/* Shrunk Search Pill */}
+          <div
+            onClick={() => {
+              if (window.innerWidth < 768) {
+                setIsMobileModalOpen(true);
+              } else if (onExpand) {
+                onExpand();
+              }
+            }}
+            className="flex-1 flex items-center gap-2 px-4 py-2 bg-canvas border border-hairline rounded-full shadow-[0_1px_2px_rgba(0,0,0,0.08),0_4px_12px_rgba(0,0,0,0.05)] hover:shadow-[0_2px_4px_rgba(0,0,0,0.18)] cursor-pointer transition-shadow"
+          >
+            <div className="flex-1 min-w-0 md:hidden">
+              <span className="text-sm font-semibold text-ink px-2 block truncate">{location || 'Cari destinasi'}</span>
+              <div className="flex items-center text-xs text-muted px-2 truncate mt-0.5">
+                <span>{startDate ? format(startDate, 'd MMM') : 'Kapan'}</span>
+                <span className="mx-1">•</span>
+                <span>{guestText}</span>
+              </div>
+            </div>
+            <span className="text-sm font-semibold text-ink px-2 hidden md:block whitespace-nowrap">{location || 'Cari destinasi'}</span>
+            <div className="w-[1px] h-6 bg-hairline hidden md:block"></div>
+            <span className="text-sm font-semibold text-ink px-2 hidden md:block whitespace-nowrap">{startDate ? format(startDate, 'd MMM') : 'Kapan'}</span>
+            <div className="w-[1px] h-6 bg-hairline hidden md:block"></div>
+            <span className="text-sm text-muted px-2 hidden md:block whitespace-nowrap">{guestText}</span>
+            <div className="bg-primary text-on-dark p-2.5 rounded-full ml-1 shrink-0 shadow-[0_2px_4px_rgba(0,0,0,0.1)]">
+              <LuSearch size={16} strokeWidth={3} />
             </div>
           </div>
-          <span className="text-sm font-semibold text-ink px-2 hidden md:block whitespace-nowrap">{location || 'Cari destinasi'}</span>
-          <div className="w-[1px] h-6 bg-hairline hidden md:block"></div>
-          <span className="text-sm font-semibold text-ink px-2 hidden md:block whitespace-nowrap">{startDate ? format(startDate, 'd MMM') : 'Kapan'}</span>
-          <div className="w-[1px] h-6 bg-hairline hidden md:block"></div>
-          <span className="text-sm text-muted px-2 hidden md:block whitespace-nowrap">{guestText}</span>
-          <div className="bg-primary text-on-dark p-2.5 rounded-full ml-1 shrink-0 shadow-[0_2px_4px_rgba(0,0,0,0.1)]">
-            <LuSearch size={16} strokeWidth={3} />
+          
+          {/* Mobile Hamburger Menu */}
+          <div className="md:hidden flex-shrink-0 w-11 h-11 rounded-full border border-hairline flex items-center justify-center bg-canvas shadow-sm cursor-pointer hover:bg-muted/10 transition">
+            <LuMenu size={20} className="text-ink" />
           </div>
         </div>
       </div>
@@ -127,8 +169,7 @@ export default function HeroSearch({ isScrolled, isExpanded, onExpand }: { isScr
 
 
         {/* Classic Pill Search Bar */}
-        {searchMode === 'classic' ? (
-          <div className={`rounded-full border border-hairline transition-all duration-300 relative z-20 shadow-[0_2px_6px_rgba(0,0,0,0.04),0_4px_8px_rgba(0,0,0,0.02)] ${activeField ? 'bg-surface-soft' : 'bg-canvas hover:shadow-[0_2px_6px_rgba(0,0,0,0.06),0_4px_8px_rgba(0,0,0,0.04)]'}`}>
+        <div className={`rounded-full border border-hairline transition-all duration-300 relative z-20 shadow-[0_2px_6px_rgba(0,0,0,0.04),0_4px_8px_rgba(0,0,0,0.02)] ${activeField ? 'bg-surface-soft' : 'bg-canvas hover:shadow-[0_2px_6px_rgba(0,0,0,0.06),0_4px_8px_rgba(0,0,0,0.04)]'}`}>
             <div className="flex items-center h-[64px] relative">
               {/* Part 1: Lokasi */}
               <div
@@ -142,8 +183,8 @@ export default function HeroSearch({ isScrolled, isExpanded, onExpand }: { isScr
                   <input
                     ref={autoCompleteRef}
                     type="text"
-                    value={location}
-                    onChange={(e) => setLocation(e.target.value)}
+                    value={locationQuery}
+                    onChange={(e) => setLocationQuery(e.target.value)}
                     placeholder="Cari destinasi"
                     className="w-full bg-transparent border-none p-0 focus:ring-0 text-[14px] text-ink placeholder-muted font-medium truncate outline-none"
                   />
@@ -201,30 +242,36 @@ export default function HeroSearch({ isScrolled, isExpanded, onExpand }: { isScr
             {activeField === 'location' && (
               <div className="absolute top-full mt-3 left-0 bg-canvas rounded-[32px] shadow-[0_8px_28px_rgba(0,0,0,0.28)] py-6 z-50 w-full sm:w-[480px]">
                 <div className="px-8 pb-4">
-                  <h3 className="text-xs font-bold text-muted tracking-wider uppercase">Destinasi yang disarankan</h3>
+                  <h3 className="text-xs font-bold text-muted tracking-wider uppercase">
+                    {locationQuery.length >= 2 ? "Hasil Pencarian" : "Ketik untuk mencari (min. 2 karakter)"}
+                  </h3>
                 </div>
                 <div className="max-h-[400px] overflow-y-auto">
-                  {locations.map((loc, index) => (
-                    <button
-                      key={index}
-                      onClick={() => {
-                        setLocation(loc.city);
-                        setActiveField('dates');
-                      }}
-                      className="w-full px-8 py-4 hover:bg-muted/5 flex items-center gap-4 group transition-colors text-left"
-                    >
-                      <div className="w-12 h-12 bg-muted/10 rounded-xl flex items-center justify-center border border-transparent group-hover:bg-canvas group-hover:border-hairline group-hover:shadow-sm transition-all duration-300">
-                        {loc.type === 'marina' && <LuAnchor className="w-5 h-5 text-muted group-hover:text-ink" />}
-                        {loc.type === 'port' && <LuShip className="w-5 h-5 text-muted group-hover:text-ink" />}
-                        {loc.type === 'island' && <LuTreePalm className="w-5 h-5 text-muted group-hover:text-ink" />}
-                        {loc.type === 'beach' && <LuWaves className="w-5 h-5 text-muted group-hover:text-ink" />}
-                      </div>
-                      <div>
-                        <p className="text-[15px] font-medium text-ink">{loc.city}</p>
-                        <p className="text-[13px] text-muted font-light">{loc.state}, {loc.country}</p>
-                      </div>
-                    </button>
-                  ))}
+                  {isLoadingLocations ? (
+                    <div className="px-8 py-4 text-sm text-muted">Sedang mencari...</div>
+                  ) : locations.length > 0 ? (
+                    locations.map((loc, index) => (
+                      <button
+                        key={index}
+                        onClick={() => {
+                          setLocationQuery(loc.label);
+                          setLocation(loc.value);
+                          setActiveField('dates');
+                        }}
+                        className="w-full px-8 py-4 hover:bg-muted/5 flex items-center gap-4 group transition-colors text-left"
+                      >
+                        <div className="w-12 h-12 bg-muted/10 rounded-xl flex items-center justify-center border border-transparent group-hover:bg-canvas group-hover:border-hairline group-hover:shadow-sm transition-all duration-300">
+                          <LuAnchor className="w-5 h-5 text-muted group-hover:text-ink" />
+                        </div>
+                        <div>
+                          <p className="text-[15px] font-medium text-ink">{loc.label}</p>
+                          <p className="text-[13px] text-muted font-light">{loc.availableBoats} perahu tersedia</p>
+                        </div>
+                      </button>
+                    ))
+                  ) : (
+                    locationQuery.length >= 2 && <div className="px-8 py-4 text-sm text-muted">Tidak ditemukan lokasi yang cocok.</div>
+                  )}
                 </div>
               </div>
             )}
@@ -297,28 +344,13 @@ export default function HeroSearch({ isScrolled, isExpanded, onExpand }: { isScr
               </div>
             )}
           </div>
-        ) : (
-          <form action={smartSearch} className="bg-canvas rounded-full border border-hairline shadow-[0_1px_2px_rgba(0,0,0,0.08),0_4px_12px_rgba(0,0,0,0.05)] hover:shadow-[0_2px_4px_rgba(0,0,0,0.18)] transition-all overflow-hidden mx-auto w-full relative z-20">
-            <div className="flex items-center h-[66px]">
-              <div className="pl-10 flex-grow flex flex-col justify-center">
-                <span className="text-[10px] font-bold text-primary uppercase tracking-[0.2em] mb-0.5">GoFishi Intelligence</span>
-                <input
-                  name="query"
-                  type="text"
-                  placeholder="Coba: 'Yacht mewah di Kepulauan Seribu untuk 12 orang'"
-                  className="w-full bg-transparent border-none p-0 focus:ring-0 text-[15px] text-ink font-medium placeholder-muted outline-none"
-                />
-              </div>
-              <div className="pr-3">
-                <button type="submit" className="bg-primary hover:brightness-95 text-on-dark rounded-full h-12 px-8 flex items-center gap-2 transition-colors">
-                  <LuSparkles className="w-4 h-4" />
-                  <span className="font-semibold text-[15px]">Tanya AI</span>
-                </button>
-              </div>
-            </div>
-          </form>
-        )}
       </div>
+      
+      {/* Mobile Modal */}
+      <MobileSearchModal 
+        isOpen={isMobileModalOpen} 
+        onClose={() => setIsMobileModalOpen(false)} 
+      />
     </div>
   );
 }

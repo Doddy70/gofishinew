@@ -27,6 +27,14 @@ const STEPS = {
   PRICE: 6,
 };
 
+const MapComponent = dynamic(
+  () => import("../components/general/map/MapComponent"),
+  {
+    ssr: false,
+    loading: () => <p className="text-center py-6">Memuat peta...</p>,
+  },
+);
+
 export default function CreateListingModal() {
   const { isOpen, close } = useCreateListingModal();
 
@@ -47,13 +55,6 @@ export default function CreateListingModal() {
 
   const router = useRouter();
 
-  const MapComponent = dynamic(
-    () => import("../components/general/map/MapComponent"),
-    {
-      ssr: false,
-      loading: () => <p className="text-center py-6">Memuat peta...</p>,
-    },
-  );
 
   const stepTitle = () => {
     switch (step) {

@@ -76,21 +76,21 @@ export default function ListingCard({
       onClick={() => router.push(detailUrl)}
     >
       {/* image container */}
-      <div className="relative aspect-[20/19] w-full rounded-[12px] overflow-hidden bg-hairline shadow-soft transition-transform duration-300 active:scale-95 group">
+      <div className="relative aspect-[20/19] w-full rounded-[12px] overflow-hidden bg-hairline transition-transform duration-300 group">
         <Image
           src={listing.imageSrc || "https://images.unsplash.com/photo-1567899834503-457b92850221?q=80&w=2070&auto=format&fit=crop"}
           alt={listing.title}
           fill
-          className="object-cover transition-opacity duration-300 group-hover:opacity-90"
+          className="object-cover transition-opacity duration-300"
         />
 
         {/* Carousel Dots Fake Indicator */}
-        <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          <div className="w-1.5 h-1.5 rounded-full bg-white opacity-100"></div>
-          <div className="w-1.5 h-1.5 rounded-full bg-white opacity-60"></div>
-          <div className="w-1.5 h-1.5 rounded-full bg-white opacity-60"></div>
-          <div className="w-1.5 h-1.5 rounded-full bg-white opacity-60"></div>
-          <div className="w-1.5 h-1.5 rounded-full bg-white opacity-60"></div>
+        <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-[5px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
+          <div className="w-[6px] h-[6px] rounded-full bg-white opacity-100"></div>
+          <div className="w-[6px] h-[6px] rounded-full bg-white opacity-60"></div>
+          <div className="w-[6px] h-[6px] rounded-full bg-white opacity-60"></div>
+          <div className="w-[6px] h-[6px] rounded-full bg-white opacity-60"></div>
+          <div className="w-[6px] h-[6px] rounded-full bg-white opacity-60"></div>
         </div>
 
         {/* Guest Favorite Badge */}
@@ -145,11 +145,11 @@ export default function ListingCard({
             </div>
           ) : (
             <div className="flex items-baseline gap-1">
-              <span className="font-semibold text-[#222222] text-[15px] underline decoration-1 underline-offset-2">
+              <span className="font-semibold text-[#222222] text-[15px]">
                 Rp {listing.price.toLocaleString('id-ID')}
               </span>
               <span className="text-[#222222] text-[15px] font-light">
-                untuk 1 hari
+                malam
               </span>
             </div>
           )}

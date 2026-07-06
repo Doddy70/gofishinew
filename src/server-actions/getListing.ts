@@ -65,17 +65,6 @@ export async function getListing(listingId: string) {
             },
             take: 5,
           },
-          reservations: {
-            where: {
-              status: { in: ["PENDING", "CONFIRMED", "COMPLETED"] },
-              endDate: { gte: new Date() }
-            },
-            select: {
-              id: true,
-              startDate: true,
-              endDate: true,
-            },
-          },
           amenities: true,
           categoryRef: true,
           locationRef: true,

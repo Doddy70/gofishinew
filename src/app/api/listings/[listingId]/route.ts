@@ -75,17 +75,7 @@ export async function GET(
           orderBy: { createdAt: "desc" },
           take: 10,
         },
-        reservations: {
-          where: {
-            status: { in: ["PENDING", "CONFIRMED", "COMPLETED"] },
-            endDate: { gte: new Date() }
-          },
-          select: {
-            id: true,
-            startDate: true,
-            endDate: true,
-          },
-        },
+
         amenities: true,
         categoryRef: true,
         locationRef: true,

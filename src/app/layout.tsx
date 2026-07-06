@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import {ClerkProvider} from "@clerk/nextjs";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -53,7 +54,9 @@ export default function RootLayout({
           <Toaster/>
           <CreateListingModal/>
           <EditListingModal/>
-          <FilterModal/>
+          <Suspense fallback={null}>
+            <FilterModal/>
+          </Suspense>
         </ClerkProvider>
       </body>
     </html>

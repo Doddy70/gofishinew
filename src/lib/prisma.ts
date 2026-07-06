@@ -16,6 +16,10 @@ const adapter = new PrismaPg(pool)
 
 export const prisma = globalForPrisma.prisma || new PrismaClient({
   adapter,
+  transactionOptions: {
+    maxWait: 5000,
+    timeout: 15000,
+  }
 })
 
 if (process.env.NODE_ENV !== 'production') {

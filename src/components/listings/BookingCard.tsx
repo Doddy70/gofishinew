@@ -18,9 +18,10 @@ interface BookingCardProps {
   pricePerNight: number;
   listingId: string;
   hostId: string;
-  reservations:{
-    startDate:string,
-    endDate:string
+  tripMasters: {
+    dateStart: string | Date;
+    dateEnd: string | Date;
+    status: string;
   }[];
   weekendPrice?: number | null;
   holidayPrice?: number | null;
@@ -31,7 +32,7 @@ export default function BookingCard({
   pricePerNight,
   listingId,
   hostId,
-  reservations,
+  tripMasters,
   weekendPrice,
   holidayPrice,
   captainPhone
@@ -86,12 +87,14 @@ export default function BookingCard({
 
   const { total, baseNights, weekendNights } = calculateBreakdown();
 
-  const disabledDates = reservations.flatMap((reservation) =>
-    eachDayOfInterval({
-      start:new Date(reservation.startDate),
-      end:new Date(reservation.endDate)
-    }) 
-  )
+  const disabledDates = tripMasters
+    .filter(trip => trip.status === "FULL" || trip.status === "CONFIRMED")
+    .flatMap((trip) =>
+      eachDayOfInterval({
+        start: new Date(trip.dateStart),
+        end: new Date(trip.dateEnd)
+      }) 
+    );
 
   const onReserve = async () => {
     if (!startDate || !endDate) return;

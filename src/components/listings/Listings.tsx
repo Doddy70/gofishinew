@@ -1,6 +1,7 @@
 "use client";
 
 import ListingCard from "./ListingCard";
+import ListingCardHorizontal from "./ListingCardHorizontal";
 import { Listing } from "@/types/listing";
 import EmptyListings from "../ui/EmptyListings";
 
@@ -27,16 +28,29 @@ export default function Listings({ listings, currentUser, mapView }: ListingsPro
     : "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6";
 
   return (
-    <div className={gridClasses}>
-      {listings.map((listing: Listing) => {
-        return (
-          <ListingCard
-            key={listing.id}
-            listing={listing}
+    <div className="flex flex-col">
+      {/* Horizontal Card for Top Pick when mapView is active */}
+      {mapView && listings.length > 0 && (
+        <div className="w-full">
+          <ListingCardHorizontal
+            listing={listings[0]}
             currentUser={currentUser}
           />
-        );
-      })}
+        </div>
+      )}
+
+      {/* Grid Cards for the rest */}
+      <div className={gridClasses}>
+        {listings.slice(mapView ? 1 : 0).map((listing: Listing) => {
+          return (
+            <ListingCard
+              key={listing.id}
+              listing={listing}
+              currentUser={currentUser}
+            />
+          );
+        })}
+      </div>
     </div>
   );
 }
