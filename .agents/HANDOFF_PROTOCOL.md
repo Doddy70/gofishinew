@@ -11,9 +11,18 @@
 - [x] Phase 5: Location Page Directive (Claude) - **NEW** Jakarta saltwater locations
 - [x] Phase 5: Schema Migration (T-01) - **NEW** weekendPrice, holidayPrice, targetFish, etc.
 - [x] Phase 5: Calendar & Pricing APIs (T-02 to T-05) - **NEW** All backend APIs complete
-- [ ] Phase 5: Location Pages (T-L1 to T-L8) - Gemini
-- [ ] Phase 5: Pusher Chat (T-06 to T-10) - Gemini
-- [ ] Phase 5: Midtrans Sandbox & E2E (Claude)
+- [x] Phase 5: Location Pages (T-L1 to T-L8) - Gemini ✅ Routing fixed: `/lokasi` (Indonesian path) (Resolved routing issue)
+- [x] Phase 5: Deployment to Vercel - ✅ Production ready
+- [x] Phase 5: README.md Branding - ✅ GoFishi fishing boat platform
+- [x] Phase 5: .gitignore cleanup - ✅ Excluded dev files
+
+- [ ] Phase 6: Pusher Chat (T-06 to T-10) - Pending
+- [ ] Phase 6: Midtrans Sandbox E2E (Claude)
+
+**🚨 CRITICAL ROUTING RULE FOR CLAUDE 🚨**
+- All UI routes for locations MUST use `/lokasi` instead of `/locations` (e.g. `/lokasi`, `/lokasi/[slug]`).
+- APIs remain at `/api/locations`.
+- The folder `src/app/locations` has been renamed to `src/app/lokasi`. Do not use `/locations` for any redirects, links, or navigation.
 
 ## Last Action
 - **Claude (Backend):**

@@ -78,7 +78,7 @@ export default function LocationsPageClient({
         return;
       }
       try {
-        const res = await axios.get(`/api/locations/search?q=${search}`);
+        const res = await axios.get(`/api/lokasi/search?q=${search}`);
         setSuggestions(res.data);
       } catch {
         setSuggestions([]);
@@ -93,13 +93,13 @@ export default function LocationsPageClient({
     setShowSuggestions(false);
     const params = new URLSearchParams();
     if (search) params.set("search", search);
-    router.push(`/locations?${params.toString()}`);
+    router.push(`/lokasi?${params.toString()}`);
   };
 
   const handleSuggestionClick = (loc: any) => {
     setSearch(loc.label);
     setShowSuggestions(false);
-    router.push(`/locations/${loc.value}`);
+    router.push(`/lokasi/${loc.value}`);
   };
 
   const handleCategoryClick = (category: string) => {
@@ -107,14 +107,14 @@ export default function LocationsPageClient({
     const params = new URLSearchParams();
     if (category) params.set("search", category);
     if (search) params.set("search", search);
-    router.push(`/locations?${params.toString()}`);
+    router.push(`/lokasi?${params.toString()}`);
   };
 
   const handlePageChange = (newPage: number) => {
     const params = new URLSearchParams();
     params.set("page", String(newPage));
     if (search) params.set("search", search);
-    router.push(`/locations?${params.toString()}`);
+    router.push(`/lokasi?${params.toString()}`);
   };
 
   return (
@@ -241,7 +241,7 @@ export default function LocationsPageClient({
               <button
                 onClick={() => {
                   setSearch("");
-                  router.push("/locations");
+                  router.push("/lokasi");
                 }}
                 className="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-gray-300 rounded-full text-xs font-medium hover:border-gray-900 transition-colors"
               >
@@ -273,7 +273,7 @@ export default function LocationsPageClient({
                 : "Belum ada dermaga yang terdaftar."}
             </p>
             <button
-              onClick={() => router.push("/locations")}
+              onClick={() => router.push("/lokasi")}
               className="px-6 py-3 bg-[#FF385C] text-white rounded-full font-semibold hover:bg-[#E31C5F] transition-colors"
             >
               Lihat Semua Lokasi
@@ -345,7 +345,7 @@ function LocationCard({ location }: { location: Location }) {
 
   return (
     <Link
-      href={`/locations/${location.id}`}
+      href={`/lokasi/${location.id}`}
       className="group block"
     >
       {/* Image Container - Airbnb aspect ratio ~3:2 */}
