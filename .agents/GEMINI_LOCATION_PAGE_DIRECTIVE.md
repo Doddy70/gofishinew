@@ -11,14 +11,39 @@
 
 ---
 
+## 🗺️ MARKET FOCUS: Jakarta, Banten, Lampung, Jawa Barat
+
+**IMPORTANT:** GoFishi saat ini beroperasi di 4 provinsi ini saja!
+
+| Province | Locations (Priority) |
+|----------|---------------------|
+| Jakarta | Ancol 🔴, Muara Baru 🟡, Sunda Kelapa |
+| Banten | Merak 🔴, Cilegon, Anyer |
+| Lampung | Bandarlampung 🟡, Krui, Pahawang |
+| Jawa Barat | Karimunjawa 🔴, Pangandaran 🟡, Cirebon |
+
+**MVP Locations (Build First):**
+1. `/lokasi/ancol` - Primary (highest traffic!)
+2. `/lokasi/muarabaru` - Jakarta secondary
+3. `/lokasi/merak` - Banten primary
+4. `/lokasi/karimunjawa` - Premium destination
+
+---
+
 ## 🎯 WHAT TO BUILD
 
 GoFishi Location Pages following Airbnb's Lake Gregory pattern:
 
 ```
-/lokasi/lombok          → Lombok Fishing Spots
-/danau/toba             → Lake Toba Fishing Spots
-/perairan/bali           → Bali Fishing Waters
+PRIORITY 1 (Build First):
+/lokasi/ancol          → Ancol, Jakarta (Primary market!)
+/lokasi/muarabaru     → Muara Baru, Jakarta
+/llokasi/merak        → Merak, Banten
+/lokasi/karimunjawa   → Karimunjawa, Jawa Barat
+
+PRIORITY 2:
+/lokasi/bandarlampung → Bandarlampung, Lampung
+/lokasi/pangandaran   → Pangandaran, Jawa Barat
 ```
 
 ---

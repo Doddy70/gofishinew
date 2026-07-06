@@ -4,6 +4,26 @@
 **Date:** 2026-07-06
 **Reference:** https://www.airbnb.co.id/lake-gregory-ca/stays
 **Purpose:** Comprehensive location page design for GoFishi fishing boat platform
+**Market Focus:** Jakarta, Banten, Lampung, Jawa Barat (Indonesia)
+
+---
+
+## 🗺️ CURRENT MARKET LOCATIONS
+
+GoFishi's operational market is currently focused on 4 provinces:
+
+| Province | Locations |
+|----------|-----------|
+| Jakarta | Ancol, Muara Baru, Sunda Kelapa |
+| Banten | Merak, Cilegon, Anyer |
+| Lampung | Bandarlampung, Krui, Pahawang |
+| Jawa Barat | Karimunjawa, Pangandaran, Cirebon |
+
+**Primary Focus (MVP):**
+- `/lokasi/ancol` - Primary (highest traffic)
+- `/lokasi/muarabaru` - Jakarta secondary
+- `/lokasi/merak` - Banten primary
+- `/lokasi/karimunjawa` - Jawa Barat primary
 
 ---
 
@@ -14,38 +34,40 @@
 Following Airbnb's destination page pattern, GoFishi will have:
 
 ```
-/lokasi/lombok              → Lombok Fishing Spots
-/danau/toba                 → Lake Toba Fishing Spots
-/perairan/bali              → Bali Fishing Waters
-/dermaga/ancol              → Ancol Marina Fishing
+/lokasi/ancol              → Ancol, Jakarta - Fishing Spots
+/lokasi/muarabaru         → Muara Baru, Jakarta - Fishing Spots
+/lokasi/merak             → Merak, Banten - Fishing Spots
+/lokasi/karimunjawa       → Karimunjawa, Jawa Barat - Fishing Spots
+/lokasi/bandarlampung     → Bandarlampung, Lampung - Fishing Spots
 ```
 
 ### Page Types Mapping
 
 | Airbnb | GoFishi | Example |
 |--------|---------|---------|
-| `lake-gregory-ca/stays` | `lokasi/[slug]` | `/lokasi/lombok` |
+| `lake-gregory-ca/stays` | `lokasi/[slug]` | `/lokasi/ancol` |
 | Cabin listings | Speedboat listings | KM Sonic Strike |
-| Amenity filters | Fishing gear filters | rods, bait, GPS |
-| Nearby cities | Nearby fishing spots | Lombok → Sumbawa |
+| Amenity filters | Fishing gear filters | GPS, Fish Finder, Live Well |
+| Nearby cities | Nearby fishing spots | Ancol → Muara Baru |
+| Fishing Techniques | Teknik Memancing | Popping, Jigging, Trolling |
 
 ---
 
 ## 📐 PAGE LAYOUT
 
-### GoFishi Location Page Structure
+### GoFishi Location Page Structure (Example: Ancol)
 
 ```
 ┌────────────────────────────────────────────────────────────────────────┐
 │  COMPACT SEARCH BAR (Sticky on scroll)                               │
 │  ┌────────────────────────────────────────────────────────────────┐ │
-│  │ [📍 Lombok] │ [📅 Tanggal] │ [👤 Tamu] │ [🔍 Cari]       │ │
+│  │ [📍 Ancol] │ [📅 Tanggal] │ [👤 Tamu] │ [🔍 Cari]        │ │
 │  └────────────────────────────────────────────────────────────────┘ │
 └────────────────────────────────────────────────────────────────────────┘
 
 ┌────────────────────────────────────────────────────────────────────────┐
 │  BREADCRUMB                                                      │
-│  Beranda > Indonesia > Lombok > Sekotong                           │
+│  Beranda > Indonesia > DKI Jakarta > Ancol                        │
 └────────────────────────────────────────────────────────────────────────┘
 
 ┌────────────────────────────────────────────────────────────────────────┐
