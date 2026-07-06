@@ -30,14 +30,14 @@ interface LocationAPIResponse {
 export default async function LocationPage({ params }: { params: Promise<{ slug: string }> }) {
   const resolvedParams = await params;
   
-  // Fetch real data from the API Claude built
-  // Next.js uses absolute URLs for fetches in Server Components, so we construct it.
-  // We can just rely on the NEXT_PUBLIC_APP_URL or localhost for dev.
-  const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
-  
+  // Use relative URL for server-side fetch (works both locally and on Vercel)
+  const baseUrl = process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}`
+    : process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
+
   let data: LocationAPIResponse;
   try {
-    const res = await fetch(`${appUrl}/api/locations/${resolvedParams.slug}`, {
+    const res = await fetch(`${baseUrl}/api/locations/${resolvedParams.slug}`, {
       next: { revalidate: 60 } // optional ISR
     });
     

@@ -26,11 +26,14 @@ export default async function PerahuArchive(props: { searchParams: SearchParams 
   params.set("page", (searchParams.page as string) || "1");
   params.set("limit", (searchParams.limit as string) || "12");
 
-  const appUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
-  
+  // Use relative URL for server-side fetch (works both locally and on Vercel)
+  const baseUrl = process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}`
+    : process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
+
   const [currentUser, listingsRes] = await Promise.all([
     getCurrentUser(),
-    fetch(`${appUrl}/api/listings/search?${params.toString()}`, { cache: "no-store" })
+    fetch(`${baseUrl}/api/listings/search?${params.toString()}`, { cache: "no-store" })
   ]);
 
   let listings = [];
