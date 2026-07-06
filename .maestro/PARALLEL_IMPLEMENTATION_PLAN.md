@@ -98,11 +98,12 @@
 
 | Task | Description | Dependencies | Status |
 |------|-------------|--------------|--------|
-| T-01 | Schema: Add weekendPrice, holidayPrice, targetFish, tackleInventory, meetingPoint | None | ⬜ Pending |
-| T-02 | API: GET /api/pricing/calculate | T-01 | ⬜ Pending |
-| T-03 | API: GET /api/listings/[id]/calendar | T-01 | ⬜ Pending |
-| T-04 | API: blocked-dates CRUD | T-01 | ⬜ Pending |
-| T-05 | API: price-overrides CRUD | T-01 | ⬜ Pending |
+| T-01 | Schema: Add weekendPrice, holidayPrice, targetFish, tackleInventory, meetingPoint | None | ✅ Done |
+| T-02 | API: GET /api/pricing/calculate | T-01 | ✅ Done |
+| T-03 | API: GET /api/listings/[id]/calendar | T-01 | ✅ Done |
+| T-04 | API: blocked-dates CRUD | T-01 | ✅ Done |
+| T-05 | API: price-overrides CRUD | T-01 | ✅ Done |
+| T-L-API | API: GET /api/locations/[slug] (Location Pages) | None | ✅ Done |
 
 ### Phase 2: Location Pages (GEMINI) 🆕 NEW
 **Focus:** Airbnb-style location pages for GoFishi market (Jakarta saltwater)
