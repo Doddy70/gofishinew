@@ -9,20 +9,21 @@
 - [x] Phase 5: Navbar Directive (Claude) - **NEW** Directive for Gemini consistency
 - [x] Phase 5: Navbar Implementation (Gemini) - Following directive
 - [x] Phase 5: Location Page Directive (Claude) - **NEW** Jakarta saltwater locations
+- [x] Phase 5: Schema Migration (T-01) - **NEW** weekendPrice, holidayPrice, targetFish, etc.
+- [x] Phase 5: Calendar & Pricing APIs (T-02 to T-05) - **NEW** All backend APIs complete
 - [ ] Phase 5: Location Pages (T-L1 to T-L8) - Gemini
-- [ ] Phase 5: Schema Migration (T-01) - Missing fields
-- [ ] Phase 5: Calendar & Pricing APIs (T-02 to T-05) - Backend
 - [ ] Phase 5: Pusher Chat (T-06 to T-10) - Gemini
 - [ ] Phase 5: Midtrans Sandbox & E2E (Claude)
 
 ## Last Action
 - **Claude (Backend):**
-  - **[2026-07-06]** Mengimplementasikan `GET /api/listings/search` - Advanced Search API dengan cross-filtering.
-  - **[2026-07-06]** Mengimplementasikan `GET /api/listings/filters` - Metadata API untuk filter dinamis.
-  - **[2026-07-06]** Audit `GEMINI_HANDOFF_KAPTEN_CHANGES.md` - Found 35% completion, created comprehensive implementation workflow.
-  - **[2026-07-06]** Buat `GEMINI_NAVBAR_DIRECTIVE.md` - Direction untuk Gemini konsisten mengkloning navbar Airbnb.
+  - **[2026-07-06]** Schema Migration (T-01): Added weekendPrice, holidayPrice, targetFish, tackleInventory, meetingPoint, slotType, PriceOverride, TransactionHistory
+  - **[2026-07-06]** API: GET /api/pricing/calculate (T-02) - Dynamic pricing with weekend/holiday/override
+  - **[2026-07-06]** API: GET /api/listings/[id]/calendar (T-03) - Calendar with tripMasters, blockedDates, priceOverrides
+  - **[2026-07-06]** API: POST/DELETE blocked-dates CRUD (T-04)
+  - **[2026-07-06]** API: POST/DELETE price-overrides CRUD (T-05)
+  - **[2026-07-06]** API: GET /api/locations/[slug] - Location page API for Jakarta saltwater
   - **[2026-07-06]** Research Jakarta saltwater fishing spots - Ancol Marina, Kepulauan Seribu, Sunda Kelapa.
-  - **[2026-07-06]** Buat `GEMINI_LOCATION_PAGE_DIRECTIVE.md` dan `GOFISHI_MARKET_LOCATIONS.md` - Location page implementation untuk market Jakarta.
 
 - **Gemini (Frontend):**
   - **[2026-07-06]** Navbar Implementation - Terapkan directive `GEMINI_NAVBAR_DIRECTIVE.md`. Menyempurnakan layout `/perahu` di desktop (Sticky Map flush edges, layout constraints h-auto, penyesuaian padding top).
